@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>ユーザー登録｜PORTFOLIO</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link href="https://fonts.googleapis.com/css?family=Acme|Montserrat:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+
+<body>
+	<header>
+		<div class="flex-b">
+			<h1><a href="index.html">PORTFOLIO</a></h1>
+			<nav id="top-nav">
+				<ul>
+					<li><a href="login.html">ログイン</a></li>
+					<li><a class="btn-primary" href="signup.html">ユーザー登録</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<main>
+		<div class="container">
+			<form action="" method="post" class="form">
+				<h2>アカウントを作成</h2>
+				<div class="err_msg">
+					<!-- 登録できませんでした。 -->
+				</div>
+
+				<label>
+					ユーザー名
+					<input type="text" name="username">
+				</label>
+				<div class="err_msg">
+					<!-- 文字数オーバーです -->
+				</div>
+				<label>
+					メールアドレス
+					<input type="text" name="email">
+				</label>
+				<div class="err_msg">
+					<!-- メール形式で入力 -->
+				</div>
+				<label>
+					パスワード（8文字以上）
+					<input type="password" name="password">
+				</label>
+				<div class="err_msg">
+					<!-- 文字数オーバーです -->
+				</div>
+				<label>
+					パスワード再入力
+					<input type="password" name="password_re">
+				</label>
+				<div class="err_msg">
+					<!-- 文字数オーバーです -->
+				</div>
+				<div class="btn-container">
+					<input type="submit" class="btn-primary" value="登録">
+				</div>
+			</form>
+		</div>
+		
+	</main>
+
+	<footer>
+		Copyright <a href="login.html">PORTFOLIO</a>.
+	</footer>
+
+</body>
+</html>
