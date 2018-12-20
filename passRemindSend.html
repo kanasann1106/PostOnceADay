@@ -22,29 +22,30 @@
 	</header>
 
 	<main>
-		<div class="container">
+		<div class="site-wrap">
 			<form action="" method="post" class="form">
 				<h2>パスワードリマインダ</h2>
 				<div class="msg-container">
 					ここにメールアドレスを入力してください。認証コードを含むメールが送信されます。
 				</div>
-				<div class="err_msg">
+				<div class="form-wrap">
+					<div class="err_msg">
 					<!-- 登録できませんでした。 -->
-				</div>
+					</div>
 
-				<label class="mt-16">
-					Email
-					<input type="text" name="username">
-				</label>
-				<div class="err_msg">
-					<!-- 文字数オーバーです -->
-				</div>
-				<div class="btn-container">
-					<input type="submit" class="btn-primary" value="送信">
+					<label class="mt-16">
+						Email
+						<input type="text" name="username">
+					</label>
+					<div class="err_msg">
+						<!-- 文字数オーバーです -->
+					</div>
+					<div class="btn-container">
+						<input type="submit" class="btn-primary" value="送信">
+					</div>
 				</div>
 			</form>
 		</div>
-		
 	</main>
 
 	<footer>
