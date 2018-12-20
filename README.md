@@ -1,2 +1,2 @@
 # PostedOnceADay
-1日1投稿しかできないTwitterみたいなSNSを(開発中)
+1日1投稿しかできないTwitterみたいなSNS(開発中)
