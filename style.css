@@ -112,6 +112,9 @@ main{
 .mb-16{
 	margin-bottom: 16px;
 }
+.pt-10{
+	padding-top: 10px;
+}
 .px-16{
 	padding: 0 16px;
 }
