@@ -1,28 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>投稿詳細｜PORTFOLIO</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link href="https://fonts.googleapis.com/css?family=Acme|Montserrat:400,700" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-</head>
+<?php
+$siteTitle = 'ログイン';
+require('head.php');
+?>
 
 <body>
-	<header>
-		<div class="flex-b">
-			<h1><a href="index.html">PORTFOLIO</a></h1>
-			<nav id="top-nav">
-				<ul>
-					<li><a class="btn-primary" href="post.html">投稿</a></li>
-					<li><a href="mypage.html"><i class="fas fa-home fa-2x pt-10"></i></a></li>
-				</ul>
-			</nav>
-		</div>
-	</header>
+	<!-- ヘッダー -->
+	<?php require('header.php'); ?>
 
+	<!-- メインコンテンツ -->
 	<main>
 		<div class="site-wrap">
+			<!-- 投稿詳細 -->
 			<section class="post-detail">
 				<div class="icon-wrap">
 					<img class="user-icon" src="images/user-icon.png">
@@ -52,6 +40,7 @@
 							<i class="far fa-heart fa-lg like-i px-16"></i>39
 						</div>
 					</div>
+					<!-- コメント一覧 -->
 					<section class="comment">
 						<div class="icon-wrap">
 							<img class="user-icon" src="images/user-icon2.png">
@@ -89,9 +78,5 @@
 		</div>
 	</main>
 
-	<footer>
-		Copyright <a href="login.html">PORTFOLIO</a>.
-	</footer>
-
-</body>
-</html>
+<!-- フッター -->
+<?php require('footer.php'); ?>

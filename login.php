@@ -1,28 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>ログイン｜PORTFOLIO</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link href="https://fonts.googleapis.com/css?family=Acme|Montserrat:400,700" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-</head>
+<?php
+$siteTitle = 'ログイン';
+require('head.php');
+?>
 
 <body>
-	<header>
-		<div class="flex-b">
-			<h1><a href="index.html">PORTFOLIO</a></h1>
-			<nav id="top-nav">
-				<ul>
-					<li><a href="login.html">ログイン</a></li>
-					<li><a class="btn-primary" href="signup.html">ユーザー登録</a></li>
-				</ul>
-			</nav>
-		</div>
-	</header>
+	<!-- ヘッダー -->
+	<?php require('header.php'); ?>
 
+	<!-- メインコンテンツ -->
 	<main>
 		<div class="site-wrap">
+			<!-- ログインフォーム -->
 			<form action="" method="post" class="form">
 				<h2>PORTFOLIOにログイン</h2>
 				<div class="form-wrap">
@@ -52,16 +40,12 @@
 						<input type="checkbox" name="pass_save">次回から自動ログインする
 					</label>
 					<div class="msg-container">
-						<a href="passRemindSend.html">パスワードを忘れですか？</a>
+						<a href="passRemindSend.php">パスワードを忘れですか？</a>
 					</div>
 				</div>
 			</form>
 		</div>
 	</main>
 
-	<footer>
-		Copyright <a href="login.html">PORTFOLIO</a>.
-	</footer>
-
-</body>
-</html>
+<!-- フッター -->
+<?php require('footer.php'); ?>
