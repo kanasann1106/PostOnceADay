@@ -32,7 +32,7 @@ require('head.php');
 					</p>
 					<div class="post-foot">
 						<div class="btn-comment">
-							<a class="link-nomal" href="comment.html">
+							<a class="link-nomal" href="comment.php">
 								<i class="far fa-comment-alt fa-lg px-16"></i>2
 							</a>
 						</div>

@@ -12,26 +12,29 @@ require('head.php');
 		<div class="post-info">
 			<span style="padding-left: 22%; margin-right: 24px;">投稿：90</span><span>いいね：120</span>
 		</div>
-		<!-- <section class="popup">
-			<p>本当に退会しますか？</p>
-			<div class="btn-container">
-				<input type="submit" name="yes" class="px-16 btn-gray btn-mid mr-24" value="はい">
-				<input type="submit" name="no" class="btn-primary btn-mid mr-24" value="いいえ">
-			</div>
-		</section> -->
+
 		<div class="mypage-wrap">
 			<!-- サイドバー -->
 			<?php require('sidebar.php'); ?>
 
 			<section class="my-contents">
-				<!-- 投稿一覧 -->
-				<!-- <?php require('postList.php');?> -->
-
-				<!-- プロフィール編集 -->
-				<?php require('profEdit.php'); ?>
-
-				<!-- パスワード変更フォーム -->
-				<!-- <?php require ('passEdit.php'); ?> -->
+				<?php 
+					if(!$_GET['menu']){
+						//投稿一覧
+						require('postList.php');
+					}elseif($_GET['menu'] === 'profEdit'){
+						//プロフィール編集
+						require('profEdit.php');
+					}elseif($_GET['menu'] === 'passEdit'){
+						//パスワード変更フォーム
+						require('passEdit.php');
+					}elseif($_GET['menu'] === 'withdraw'){
+						//退会ポップアップ
+						require('withdraw.php');
+					}else{
+						header("Location:mypage.php"); //マイページへ
+					}
+				?>
 			</section>
 		</div>
 	</main>
