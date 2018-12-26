@@ -24,7 +24,7 @@
 </article>
 <article class="post">
 	<div class="icon-wrap">
-		<img class="user-icon" src="images/user-icon2.png">
+		<img class="user-icon" src="images/user-icon3.jpeg">
 	</div>
 	<div class="post-wrap">
 		<div class="post-head">
