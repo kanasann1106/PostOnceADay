@@ -116,7 +116,7 @@ function dbConnect(){
 	// DBへの接続準備
 	$dsn = 'mysql:dbname=PostedOnceADay;host=localhost;charset=utf8';
 	$user = 'root';
-	$password = 'root';
+	$password = '123511kN';
 	$options = array(
 		// SQL実行失敗時にはエラーコードのみ設定
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT,
