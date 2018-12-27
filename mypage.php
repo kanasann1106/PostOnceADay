@@ -19,7 +19,7 @@ require('head.php');
 
 			<section class="my-contents">
 				<?php 
-					if(!$_GET['menu']){
+					if(empty($_GET['menu'])){
 						//投稿一覧
 						require('postList.php');
 					}elseif($_GET['menu'] === 'profEdit'){
