@@ -1,5 +1,15 @@
 <?php
-$siteTitle = 'マイページ';
+
+//共通変数・関数ファイルを読込み
+require('function.php');
+
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debug('「　ユーザーページ　');
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debugLogStart();
+?>
+<?php
+$siteTitle = (!empty($_SESSION['user_id'])) ? 'マイページ' : 'ユーザーページ';
 require('head.php');
 ?>
 

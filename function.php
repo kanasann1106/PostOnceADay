@@ -20,6 +20,31 @@ function debug($str){
 	}
 }
 /*-------------------------------
+	セッション準備・セッション有効期限を延ばす
+-------------------------------*/
+// セッションファイルの置き場を変更(30日は削除されない デフォルト有効期限は24分)
+session_save_path("/var/tmp/");
+// ガーベージコレクションが削除するセッションの有効期限を設定
+ini_set('session.gc_maxlifetime', 60*60*24*30);
+// ブラウザを閉じても削除されないようにクッキー自体の有効期限を延ばす
+ini_set('session.cookie_lifetime', 60*60*24*30);
+// セッション使用
+session_start();
+// セッションIDを新しく発行(なりすまし対策)
+session_regenerate_id();
+/*-------------------------------
+	画面表示処理開始ログ吐き出し関数
+-------------------------------*/
+function debugLogStart(){
+	debug('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 画面表示処理開始');
+	debug('セッションID：'.session_id());
+	debug('センション変数の中身：'.print_r($_SESSION,true));
+	debug('現在日時のタイムスタンプ：'.time());
+	if(!empty($_SESSION['login_date']) && !empty($_SESSION['login_limit'])){
+		debug('ログイン期限日時タイムスタンプ：'.($_SESSION['login_date'] + $_SESSION['login_limit']));
+	}
+}
+/*-------------------------------
 	定数
 -------------------------------*/
 // エラーメッセージ
@@ -30,6 +55,7 @@ define('MSG04', '文字以上で入力してください');
 define('MSG05', 'E-mailの形式で入力してください');
 define('MSG06', '文字以内で入力してください');
 define('MSG07', 'エラーが発生しました。しばらく経ってからやり直してください');
+define('MSG08', 'ユーザー名またはパスワードが違います');
 
 /*-------------------------------
 	グローバル変数
@@ -90,7 +116,7 @@ function dbConnect(){
 	// DBへの接続準備
 	$dsn = 'mysql:dbname=PostedOnceADay;host=localhost;charset=utf8';
 	$user = 'root';
-	$password = '123511kN';
+	$password = 'root';
 	$options = array(
 		// SQL実行失敗時にはエラーコードのみ設定
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT,

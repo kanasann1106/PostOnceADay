@@ -1,4 +1,17 @@
 <?php
+
+//共通変数・関数ファイルを読込み
+require('function.php');
+
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debug('「　コメントページ　');
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debugLogStart();
+
+// ログイン認証
+require('auth.php');
+?>
+<?php
 $siteTitle = 'コメント送信';
 require('head.php');
 ?>

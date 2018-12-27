@@ -1,4 +1,14 @@
 <?php
+
+//共通変数・関数ファイルを読込み
+require('function.php');
+
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debug('「　トップページ　');
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debugLogStart();
+?>
+<?php
 $siteTitle = 'TOP';
 require('head.php');
 ?>

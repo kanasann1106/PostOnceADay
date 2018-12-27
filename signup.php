@@ -1,6 +1,12 @@
 <?php
-// 共通変数・関数ファイルを読み込み
+
+//共通変数・関数ファイルを読込み
 require('function.php');
+
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debug('「　ユーザー登録ページ　');
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debugLogStart();
 
 // post送信されていた場合
 if(!empty($_POST)){
@@ -36,16 +42,38 @@ if(!empty($_POST)){
 			// パスワードとパスワード（再入力）が合っているかのチェック
 			validMatch($pass, $pass_re, 'pass_re');
 
-			// if(empty($err_msg)){
-			// 	debug('パリデーションチェックOK!');
-			// 	try{
+			if(empty($err_msg)){
+				debug('パリデーションチェックOK!');
+				try{
+					// DB接続
+					$dbh = dbConnect();
+					$sql = 'INSERT INTO users (username, email, password, login_time, created_date) VALUES (:username, :email, :pass, :login_time, :created_date)';
+					$data = array(
+						':username' => $username, ':email' => $email, ':pass' => password_hash($pass, PASSWORD_DEFAULT),
+						':login_time' => date('Y-m-d H:i:s'), ':created_date' => date('Y-m-d H:i:s')
+					);
+					// クエリ実行
+					$stmt = queryPost($dbh, $sql, $data);
 
-			// 	}catch{
+					// クエリ成功の場合
+					if($stmt){
+						// ログイン有効期限（デフォルトは1時間）
+						$sesLimit = 60*60;
+						// ログイン日時を現在日時に更新
+						$_SESSION['login_date'] = time();
+						$_SESSION['login_limit'] = $sesLimit;
+						// ユーザーIDを格納
+						$_SESSION['user_id'] = $dbh->lastInsertId();
 
-			// 	}
-			// }
+						debug('セッション変数の中身：'.print_r($_SESSION,true));
 
-			
+						header("Location:index.php");
+					}
+				}catch(Exception $e){
+					error_log('エラー発生：'. $e->getMessage());
+					$err_msg['common'] = MSG07;
+				}
+			}
 		}
 	}
 }

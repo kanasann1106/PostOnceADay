@@ -4,7 +4,7 @@
 	</div>
 	<div class="post-wrap">
 		<div class="post-head">
-			<a href="#" class="username">メッテジさん</a>
+			<a href="mypage.php?u_name=" class="username">メッテジさん</a>
 			<time>2018/12/22</time>
 		</div>
 		<p>
@@ -28,7 +28,7 @@
 	</div>
 	<div class="post-wrap">
 		<div class="post-head">
-			<a href="#" class="username">ケェさん</a>
+			<a href="mypage.php?u_name=" class="username">ケェさん</a>
 			<time>2018/12/22</time>
 		</div>
 		<p>

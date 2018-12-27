@@ -8,11 +8,18 @@
 			こんにちは。こんにちは。こんにちは。こんにちは。こんにちは。こんにちは。
 		</li>
 	</ul>
-	<!-- マイメニュー -->
-	<ul id="js-mymenulist" class="menu">
-		<a href="logout.php">ログアウト</a>
-		<a href="mypage.php?menu=passEdit">パスワード変更</a>
-		<a href="mypage.php?menu=profEdit">プロフィール編集</a>
-		<a href="mypage.php?menu=withdraw">退会</a>
-	</ul>
+	<?php
+		if(!empty($_SESSION['user_id'])){
+	?>
+		<!-- マイメニュー -->
+		<ul id="js-mymenulist" class="menu">
+			<a href="logout.php">ログアウト</a>
+			<a href="mypage.php?menu=passEdit">パスワード変更</a>
+			<a href="mypage.php?menu=profEdit">プロフィール編集</a>
+			<a href="mypage.php?menu=withdraw">退会</a>
+		</ul>
+	<?php
+		}
+	?>
+	
 </aside>
