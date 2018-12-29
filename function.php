@@ -56,6 +56,7 @@ define('MSG05', 'E-mailの形式で入力してください');
 define('MSG06', '文字以内で入力してください');
 define('MSG07', 'エラーが発生しました。しばらく経ってからやり直してください');
 define('MSG08', 'ユーザー名またはパスワードが違います');
+define('MSG09', 'そのEmailは既に登録されています');
 
 /*-------------------------------
 	グローバル変数
@@ -87,11 +88,32 @@ function validMinLen($str, $key, $min = 6){
 		$err_msg[$key] = $min.MSG04;
 	}
 }
-// E-mail形式チェック
+// email形式チェック
 function validEmail($str, $key){
 	if(!preg_match("/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/", $str)){
 		global $err_msg;
 		$err_msg[$key] = MSG05;
+	}
+}
+// email重複チェック
+function validEmailDup($email){
+	global $err_msg;
+	try{
+		$dbh = dbConnect();
+		$sql = 'SELECT count(*) FROM users WHERE email = :email AND delete_flg = 0';
+		$data = array(':email' => $email);
+		// クエリ実行
+		$stmt = queryPost($dbh, $sql, $data);
+		// クエリ結果の値を取得
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		debug('クエリ結果の中身'.print_r($result,true));
+
+		if(!empty(array_shift($result))){
+			$err_msg['email'] = MSG09;
+		}
+	}catch(Exception $e){
+		error_log('エラー発生：'. $e->getMessage());
+		$err_msg['common'] = MSG07;
 	}
 }
 // 半角英数字チェック
@@ -106,6 +128,22 @@ function validMatch($str1, $str2, $key){
 	if($str1 !== $str2){
 		global $err_msg;
 		$err_msg[$key] = MSG03;
+	}
+}
+// パスワードチェック
+function validPass($str, $key){
+	// 半角英数字チェック
+	validHalf($str, $key);
+	// 最小文字数チェック
+	validMinLen($str, $key);
+	// 最大文字数チェック
+	validMaxLen($str, $key);
+}
+// エラーメッセージ表示
+function getErrMsg($key){
+	global $err_msg;
+	if(!empty($err_msg[$key])){
+		echo $err_msg[$key];
 	}
 }
 /*-------------------------------
@@ -144,7 +182,3 @@ function queryPost($dbh, $sql, $data){
 	debug('クエリ成功');
 	return $stmt;
 }
-
-
-
-

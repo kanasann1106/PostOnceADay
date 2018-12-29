@@ -30,13 +30,11 @@ if(!empty($_POST)){
 		validEmail($email, 'email');
 		// emailの最大文字数チェック
 		validMaxLen($email, 'email');
+		// email重複チェック
+		validEmailDup($email);
 
-		// パスワードの半角英数字チェック
-		validHalf($pass, 'pass');
-		// パスワードの最大文字数チェック
-		validMaxLen($pass, 'pass');
-		// パスワードの最小文字数チェック
-		validMinLen($pass, 'pass');
+		// パスワードチェック
+		validPass($pass, 'pass');
 
 		if(empty($err_msg)){
 			// パスワードとパスワード（再入力）が合っているかのチェック
@@ -95,9 +93,7 @@ require('head.php');
 				<h2>ユーザー登録</h2>
 				<div class="form-wrap">
 					<div class="err_msg">
-						<?php
-						if(!empty($err_msg['common'])) echo $err_msg['common'];
-						?>
+						<?php getErrMsg('common'); ?>
 					</div>
 
 					<label class="<?php if(!empty($err_msg['username'])) echo 'err'; ?>">
@@ -105,36 +101,28 @@ require('head.php');
 						<input type="text" name="username" value="<?php if(!empty($_POST['username'])) echo $_POST['username']; ?>">
 					</label>
 					<div class="err_msg">
-						<?php
-						if(!empty($err_msg['username'])) echo $err_msg['username'];
-						?>
+						<?php getErrMsg('username'); ?>
 					</div>
 					<label class="<?php if(!empty($err_msg['email'])) echo 'err'; ?>">
 						メールアドレス
 						<input type="text" name="email" value="<?php if(!empty($_POST['email'])) echo $_POST['email']; ?>">
 					</label>
 					<div class="err_msg">
-						<?php
-						if(!empty($err_msg['email'])) echo $err_msg['email'];
-						?>
+						<?php getErrMsg('email'); ?>
 					</div>
 					<label class="<?php if(!empty($err_msg['pass'])) echo 'err'; ?>">
 						パスワード（6文字以上）
 						<input type="password" name="pass" value="<?php if(!empty($_POST['pass'])) echo $_POST['pass']; ?>">
 					</label>
 					<div class="err_msg">
-						<?php
-						if(!empty($err_msg['pass'])) echo $err_msg['pass'];
-						?>
+						<?php getErrMsg('pass'); ?>
 					</div>
 					<label class="<?php if(!empty($err_msg['pass_re'])) echo 'err'; ?>">
 						パスワード再入力
 						<input type="password" name="pass_re" value="<?php if(!empty($_POST['pass_re'])) echo $_POST['pass_re']; ?>">
 					</label>
 					<div class="err_msg">
-						<?php
-						if(!empty($err_msg['pass_re'])) echo $err_msg['pass_re'];
-						?>
+						<?php getErrMsg('pass_re'); ?>
 					</div>
 					<div class="btn-container">
 						<input type="submit" class="btn-primary" value="登録">

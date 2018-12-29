@@ -25,10 +25,8 @@ if(!empty($_POST)){
 	if(empty($err_msg)){
 		// 文字数チェック
 		validMaxLen($username, 'username', 15);
-		validMaxLen($pass, 'pass');
-		validMinLen($pass, 'pass');
-		// パスワード半角英数字チェック
-		validHalf($pass, 'pass');
+		// パスワードチェック
+		validPass($pass, 'pass');
 
 		if(empty($err_msg)){
 			debug('バリデーションOKです。');
@@ -99,7 +97,7 @@ require('head.php');
 				<h2>PORTFOLIOにログイン</h2>
 				<div class="form-wrap">
 					<div class="err_msg">
-						<?php if(!empty($err_msg['common'])) echo $err_msg['common']; ?>
+						<?php getErrMsg('common'); ?>
 					</div>
 
 					<label class="<?php if(!empty($err_msg['username'])) echo 'err'; ?>">
@@ -107,14 +105,14 @@ require('head.php');
 						<input type="text" name="username" value="<?php if(!empty($_POST['username'])) echo $_POST['username']; ?>">
 					</label>
 					<div class="err_msg">
-						<?php if(!empty($err_msg['username'])) echo $err_msg['username']; ?>
+						<?php getErrMsg('username'); ?>
 					</div>
 					<label class="<?php if(!empty($err_msg['pass'])) echo 'err'; ?>">
 						パスワード（6文字以上）
 						<input type="password" name="pass" value="<?php if(!empty($_POST['pass'])) echo $_POST['pass'] ?>">
 					</label>
 					<div class="err_msg">
-						<?php if(!empty($err_msg['pass'])) echo $err_msg['pass']; ?>
+						<?php getErrMsg('pass'); ?>
 					</div>
 					
 					<div class="btn-container">
