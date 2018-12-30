@@ -57,6 +57,8 @@ define('MSG06', '文字以内で入力してください');
 define('MSG07', 'エラーが発生しました。しばらく経ってからやり直してください');
 define('MSG08', 'ユーザー名またはパスワードが違います');
 define('MSG09', 'そのEmailは既に登録されています');
+// 成功時メッセージ
+define('SUC01', '登録しました');
 
 /*-------------------------------
 	グローバル変数
@@ -182,3 +184,87 @@ function queryPost($dbh, $sql, $data){
 	debug('クエリ成功');
 	return $stmt;
 }
+/*-------------------------------
+	その他
+-------------------------------*/
+// サニタイズ
+function sanitize($str){
+	return htmlspecialchars($str,ENT_QUOTES);
+}
+//フォーム入力保持
+function getFormData($str){
+	global $dbFormData;
+	// ユーザーデータがある場合
+	if(!empty($dbFormData)){
+		//フォームのエラーがある場合
+		if(!empty($err_msg[$str])){
+			//POSTにデータがある場合
+			if(isset($_POST[$str])){
+				return sanitize($_POST[$str]);
+			}else{
+				return sanitize($dbFormData[$str]);
+			}
+		}else{
+			// POSTにデータがあり、DBの情報と違う場合
+			if(isset($_POST[$str]) && $_POST[$str] !== $dbFormData[$str]){
+				return sanitize($_POST[$str]);
+			}else{
+				// 変更しない
+				return sanitize($dbFormData[$str]);
+			}
+		}
+	}else{
+		if(isset($_POST[$str])){
+			return sanitize($_POST[$str]);
+		}
+	}
+}
+// 画像処理
+function uploadImg($file, $key){
+	debug('画像アップロード処理開始');
+	debug('FILE情報：'.print_r($file,true));
+
+	if(isset($file['error']) && is_int($file['error'])){
+		try{
+			switch($file['error']){
+				case UPLOAD_ERR_OK: //OK
+					break;
+				case UPLOAD_ERR_NO_FILE: //ファイル未選択の場合
+					throw new RuntimeException('ファイルが選択されていません');
+				case UPLOAD_ERR_INI_SIZE: //php.ini定義の最大サイズが超過した場合
+				case UPLOAD_ERR_FORM_SIZE: //フォーム定義の最大サイズが超過した場合
+					throw new RuntimeException('ファイルサイズが大きすぎます');
+				default:
+					throw new RuntimeException('その他のエラーが発生しました');
+			}
+			// upload画像が指定した拡張子と合っているか
+			$type =@exif_imagetype($file['tmp_name']);
+			if(!in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG], true)){
+				throw new RuntimeException('画像形式が未対応です');
+			}
+			//ファイル名をハッシュ化しパスを生成
+			$path = 'uploads/'.sha1_file($file['tmp_name']).image_type_to_extension($type);
+			
+			if(!move_uploaded_file($file['tmp_name'], $path)){
+				throw new RuntimeException('ファイル保存時にエラーが発生しました');
+			}
+			//保存したファイルパスのパーミッションを変更する
+			chmod($path,0644);
+
+			debug('ファイルは正常にアップロードされました');
+			debug('ファイルパス：'.$path);
+			return $path;
+		}catch(RuntimeException $e){
+			debug($e->getMessage());
+			global $err_msg;
+			$err_msg[$key] = $e->getMessage();
+		}
+	}
+}
+
+
+
+
+
+
+
