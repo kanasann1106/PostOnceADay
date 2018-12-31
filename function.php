@@ -184,6 +184,30 @@ function queryPost($dbh, $sql, $data){
 	debug('クエリ成功');
 	return $stmt;
 }
+function getPost($u_id, $p_id){
+	debug('商品情報を取得します。');
+	debug('ユーザID：'.$u_id);
+	debug('投稿ID：'.$p_id);
+
+	try{
+		// DB接続
+		$dbh = dbConnect();
+		// SQL文作成
+		$sql = 'SELECT * FROM post WHERE user_id = :u_id AND id = :p_id AND delete_flg = 0';
+		$data = array(':u_id' => $u_id, ':p_id' => $p_id);
+
+		// クエリ実行
+		$stmt = queryPost($dbh, $sql, $data);
+
+		if($stmt){
+			return $stmt->fetch(PDO::FETCH_ASSOC);
+		}else{
+			return false;
+		}
+	}catch(Exception $e){
+		error_log('エラー発生：'.$e->getMessage());
+	}
+}
 /*-------------------------------
 	その他
 -------------------------------*/

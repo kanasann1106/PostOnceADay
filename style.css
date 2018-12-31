@@ -246,7 +246,7 @@ main{
 label{
 	display: block;
 }
-label.err input{
+label.err input, label.err textarea{
 	background: #fbdddd;
 }
 textarea{
@@ -302,10 +302,11 @@ input[type="submit"]:hover{
 	position: relative;
 	color: #aaa;
 	background: #f6f5f5;
-	font-size: 13px;
+	font-size: 12px;
 	width: 100%;
 	height: 128px;
 	text-align: center;
+	box-sizing: border-box;
 }
 .prof-area-drop{
 	position: relative;

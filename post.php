@@ -37,7 +37,7 @@ if(!empty($p_id) && empty($dbFormData)){
 if(!empty($_POST)){
 
 	$contents = $_POST['contents'];
-	$post_img = (!empty($_FILES['post_img']['name'])) ? uploadImg($_FILES['pos_img'],'post_img') : '';
+	$post_img = (!empty($_FILES['post_img']['name'])) ? uploadImg($_FILES['post_img'],'post_img') : '';
 
 	// 更新の場合はDBの情報と入力情報が異なる場合にバリデーションチェック
 	if(empty($dbFormData)){
@@ -59,13 +59,16 @@ if(!empty($_POST)){
 
 		try{
 			$dbh = dbConnect();
-			// 編集画面の場合
-			$sql = 'UPDATE post SET contents = :contents, post_img = :post_img WHERE user_id = :u_id AND id = :p_id';
-			$data = array(':contents' => $contents, ':post_img' => $post_img, ':u_id' => $_SESSION['user_id'], ':p_id' => $p_id);
-
-			$sql = 'INSERT INTO post (contents, post_img, user_id, created_date)  VALUES (:contents, :post_img, :user_id :date)';
-			$data = array(':contents' => $contents, ':post_img' => $post_img, ':user_id' => $_SESSION['user_id'], ':date' => date('Y-m-d H:i:s'));
-		
+			
+			if($edit_flg){ // 編集画面の場合
+				debug('DB更新です。');
+				$sql = 'UPDATE post SET contents = :contents, post_img = :post_img WHERE user_id = :u_id AND id = :p_id';
+				$data = array(':contents' => $contents, ':post_img' => $post_img, ':u_id' => $_SESSION['user_id'], ':p_id' => $p_id);
+			}else{
+				debug('DB更新登録です。');
+				$sql = 'INSERT INTO post (contents, post_img, user_id, created_date) VALUES (:contents, :post_img, :user_id, :date)';
+				$data = array(':contents' => $contents, ':post_img' => $post_img, ':user_id' => $_SESSION['user_id'], ':date' => date('Y-m-d H:i:s'));
+			}
 			debug('SQL:'.$sql);
 			debug('流し込みデータ：'.print_r($data,true));
 			// クエリ実行
@@ -83,6 +86,7 @@ if(!empty($_POST)){
 		}
 	}
 }
+debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 ?>
 <?php
 $siteTitle = '投稿';
@@ -117,8 +121,9 @@ require('head.php');
 							<div class="area-drop">
 								ここに画像をドラッグ＆ドロップ
 								<i class="far fa-image fa-6x image-icon"></i>
-								<input type="file" name="post_img">
-								<img src="<?php echo getFormData('post_img') ;?>">
+								<input type="hidden" name="MAX_FILE_SIZE" value="3145728">
+								<input type="file" name="post_img" class="input-file">
+								<img src="<?php echo getFormData('post_img') ;?>" alt="投稿画像" class="prev-img" style="<?php if(empty(getFormData('post_img'))) echo 'display:none;' ?>">
 							</div>
 						</label>
 						<div class="err_msg">
