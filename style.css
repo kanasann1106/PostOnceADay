@@ -298,7 +298,7 @@ input[type="submit"]:hover{
 	box-sizing: border-box;
 	margin-bottom: 16px;
 }
-.area-drop{
+.form .area-drop{
 	position: relative;
 	color: #aaa;
 	background: #f6f5f5;

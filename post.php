@@ -116,15 +116,12 @@ require('head.php');
 						<?php if(!empty($err_msg['contents'])) echo $err_msg['contents']; ?>
 					</div>
 					<div class="imgDrop-wrap">
-						<label class="<?php if(!empty($err_msg['post_img'])) echo 'err' ;?>">
-							画像
-							<div class="area-drop">
-								ここに画像をドラッグ＆ドロップ
-								<i class="far fa-image fa-6x image-icon"></i>
-								<input type="hidden" name="MAX_FILE_SIZE" value="3145728">
-								<input type="file" name="post_img" class="input-file">
-								<img src="<?php echo getFormData('post_img') ;?>" alt="投稿画像" class="prev-img" style="<?php if(empty(getFormData('post_img'))) echo 'display:none;' ?>">
-							</div>
+						<label class="area-drop <?php if(!empty($err_msg['post_img'])) echo 'err' ;?>">
+							ここに画像をドラッグ＆ドロップ
+							<!-- <i class="far fa-image fa-6x image-icon"></i> -->
+							<input type="hidden" name="MAX_FILE_SIZE" value="3145728">
+							<input type="file" name="post_img" class="input-file">
+							<img src="<?php echo getFormData('post_img') ;?>" alt="投稿画像" class="prev-img" style="<?php if(empty(getFormData('post_img'))) echo 'display:none;' ?>">
 						</label>
 						<div class="err_msg">
 							<?php if(!empty($err_msg['post_img'])) echo $err_msg['post_img']; ?>

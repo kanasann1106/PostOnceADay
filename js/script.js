@@ -26,11 +26,11 @@ $(function(){
 	});
 	$fileInput.on('change', function(e){
 		$dropArea.css('border', 'none');
-		var file = this.files[0],
+		var file =this.files[0],
 				$img = $(this).siblings('.prev-img'),
 				fileReader = new fileReader();
 
-		fileReader.onload = function(event){
+		fileReader.onload =function(event){
 			$img.attr('src', event.target.result).show();
 		};
 
