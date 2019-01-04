@@ -66,8 +66,8 @@ if(!empty($_POST)){
 				$data = array(':contents' => $contents, ':post_img' => $post_img, ':u_id' => $_SESSION['user_id'], ':p_id' => $p_id);
 			}else{
 				debug('DB更新登録です。');
-				$sql = 'INSERT INTO post (contents, post_img, user_id, created_date) VALUES (:contents, :post_img, :user_id, :date)';
-				$data = array(':contents' => $contents, ':post_img' => $post_img, ':user_id' => $_SESSION['user_id'], ':date' => date('Y-m-d H:i:s'));
+				$sql = 'INSERT INTO post (contents, post_img, user_id, created_date) VALUES (:contents, :post_img, :u_id, :date)';
+				$data = array(':contents' => $contents, ':post_img' => $post_img, ':u_id' => $_SESSION['user_id'], ':date' => date('Y-m-d H:i:s'));
 			}
 			debug('SQL:'.$sql);
 			debug('流し込みデータ：'.print_r($data,true));

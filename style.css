@@ -297,6 +297,7 @@ input[type="submit"]:hover{
 	padding: 4px;
 	box-sizing: border-box;
 	margin-bottom: 16px;
+	overflow:hidden;
 }
 .form .area-drop{
 	position: relative;
@@ -307,6 +308,21 @@ input[type="submit"]:hover{
 	height: 128px;
 	text-align: center;
 	box-sizing: border-box;
+}
+.form .input-file{
+	opacity: 0;
+	width: 100%;
+	height: 140px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+}
+.form .prev-img{
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 .prof-area-drop{
 	position: relative;
@@ -323,15 +339,6 @@ input[type="submit"]:hover{
 	border-radius: 50%;
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
-}
-.area-drop input, .prof-area-drop input{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	display: none;
-	z-index: 2;
 }
 /*----------------------------------
 	マイページ
