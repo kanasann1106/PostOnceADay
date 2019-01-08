@@ -184,8 +184,9 @@ function queryPost($dbh, $sql, $data){
 	debug('クエリ成功');
 	return $stmt;
 }
+// 投稿情報を取得
 function getPost($u_id, $p_id){
-	debug('商品情報を取得します。');
+	debug('投稿情報を取得します。');
 	debug('ユーザID：'.$u_id);
 	debug('投稿ID：'.$p_id);
 
@@ -206,6 +207,31 @@ function getPost($u_id, $p_id){
 		}
 	}catch(Exception $e){
 		error_log('エラー発生：'.$e->getMessage());
+	}
+}
+// 全ての投稿情報を取得
+function getProductList(){
+	debug('投稿情報を取得');
+
+	try{
+		// DBへ接続
+		$dbh = dbConnect();
+		$sql = 'SELECT * FROM post';
+		$data = array();
+		debug('SQL:'.$sql);
+
+		// クエリ実行
+		$stmt = queryPost($dbh, $sql, $data);
+
+		if($stmt){
+			// クエリ結果のデータ（全レコードを格納）
+			$result['data'] = $stmt->fetchAll();
+			return $result;
+		}else{
+			return false;
+		}
+	}catch(Exception $e){
+		error_log('エラー発生：'. $e->getMessage());
 	}
 }
 /*-------------------------------
