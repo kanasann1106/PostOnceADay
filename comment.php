@@ -66,9 +66,9 @@ require('head.php');
 					</div>
 
 					<label class="mt-16 <?php if(!empty($err_msg['comment'])) echo 'err' ?>">
-						<textarea name="comment" cols=63 rows=20><?php echo getFormData('comment'); ?></textarea>
+						<textarea id="js-countup" name="comment" cols=63 rows=20><?php echo getFormData('comment'); ?></textarea>
 					</label>
-					<p class="counter-text">0/200</p>
+					<p class="counter-text"><span id="js-countup-view">0</span>/200</p>
 					<div class="err_msg">
 						<?php getErrMsg('comment'); ?>
 					</div>

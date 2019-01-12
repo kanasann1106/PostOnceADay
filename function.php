@@ -82,6 +82,7 @@ function validRequired($str, $key){
 }
 // 最大文字数チェック
 function validMaxLen($str, $key, $max = 200){
+	$str = str_replace("\r\n", "", $str); //改行を削除
 	if(mb_strlen($str) > $max){
 		global $err_msg;
 		$err_msg[$key] = $max.MSG06;

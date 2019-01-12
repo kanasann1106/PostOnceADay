@@ -97,7 +97,7 @@ require('head.php');
 					?>
 					<section class="comment">
 						<div class="icon-wrap">
-							<img class="user-icon" src="images/user-icon2.png">
+							<img class="user-icon" src="<?php echo showImg(sanitize($dbCommentUserInfo['user_img'])); ?>">
 						</div>
 						<div class="post-wrap">
 							<div class="post-head">
