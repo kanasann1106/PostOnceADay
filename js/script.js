@@ -12,7 +12,7 @@ $(function(){
 	});
 
 	// 画像ライブプレビュー
-	var $dropArea = $('.area-drop');
+	var $dropArea = $('.js-area-drop');
 	var $fileInput = $('.input-file');
 	$dropArea.on('dragover', function(e){
 		e.stopPropagation();

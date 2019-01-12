@@ -33,6 +33,39 @@ if(!empty($p_id) && empty($dbFormData)){
 	header("Location:index.php");
 }
 
+// DBから最新の投稿情報を取得
+// ------------------------------
+$canpost_flg = ''; // 投稿可能フラグ
+$newpost_flg = ''; // 初投稿フラグ
+
+if(!empty(getMyPosts($_SESSION['user_id']))){
+	$newpost_flg = false;
+	// my投稿情報取得
+	$myposts = getMyPosts($_SESSION['user_id']);
+	debug('マイ投稿：'.print_r($myposts,true));
+
+	// 最新の投稿日時
+	$latest_post_date = new DateTime($myposts[0]['created_date']);
+	// 最新の投稿日時をunixtimeに変換
+	$unix_latest_date = $latest_post_date->format('U');
+
+	// 最新の投稿日から24h経っているかチェック
+	$date_limit = 60*60*24;
+	
+	// 現在日時が最新投稿日時よりも大きければフラグ１を立てる
+	$canpost_flg = (($unix_latest_date + $date_limit) < time()) ? true : false;
+
+	// ($canpost_flg==1) ? debug('投稿できます') : debug('投稿して24時間経っていないため投稿不可');
+
+	debug('最新の投稿日時：'.$myposts[0]['created_date']);
+	debug('次回投稿可能な日時：'.date('Y/m/d H:i:s',($unix_latest_date + $date_limit)));
+}else{
+	$newpost_flg = true;
+	debug('まだ投稿がありません');
+	debug('$canpost_flg:'.$canpost_flg);
+}
+
+
 // post送信されていた場合
 if(!empty($_POST)){
 
@@ -65,7 +98,7 @@ if(!empty($_POST)){
 				$sql = 'UPDATE post SET contents = :contents, post_img = :post_img WHERE user_id = :u_id AND id = :p_id';
 				$data = array(':contents' => $contents, ':post_img' => $post_img, ':u_id' => $_SESSION['user_id'], ':p_id' => $p_id);
 			}else{
-				debug('DB更新登録です。');
+				debug('DB新規登録です。');
 				$sql = 'INSERT INTO post (contents, post_img, user_id, created_date) VALUES (:contents, :post_img, :u_id, :date)';
 				$data = array(':contents' => $contents, ':post_img' => $post_img, ':u_id' => $_SESSION['user_id'], ':date' => date('Y-m-d H:i:s'));
 			}
@@ -105,18 +138,18 @@ require('head.php');
 				<h2>投稿する</h2>
 				<div class="form-wrap">
 					<div class="err_msg">
-						<?php if(!empty($err_msg['common'])) echo $err_msg['common']; ?>
+						<?php getErrMsg('common'); ?>
 					</div>
 
 					<label class="mt-16 <?php if(!empty($err_msg['contents'])) echo 'err' ;?>">
-						<textarea id="js-countup" name="contents" cols=63 rows=12></textarea>
+						<textarea id="js-countup" name="contents" cols=63 rows=12><?php echo getFormData('contents'); ?></textarea>
 					</label>
 					<p class="counter-text"><span id="js-countup-view">0</span>/200</p>
 					<div class="err_msg">
-						<?php if(!empty($err_msg['contents'])) echo $err_msg['contents']; ?>
+						<?php getErrMsg('contents'); ?>
 					</div>
 					<div class="imgDrop-wrap">
-						<label class="area-drop <?php if(!empty($err_msg['post_img'])) echo 'err' ;?>">
+						<label class="img-area js-area-drop <?php if(!empty($err_msg['post_img'])) echo 'err' ;?>">
 							ここに画像をドラッグ＆ドロップ
 							<!-- <i class="far fa-image fa-6x image-icon"></i> -->
 							<input type="hidden" name="MAX_FILE_SIZE" value="3145728">
@@ -124,13 +157,13 @@ require('head.php');
 							<img src="<?php echo getFormData('post_img') ;?>" alt="投稿画像" class="prev-img" style="<?php if(empty(getFormData('post_img'))) echo 'display:none;' ?>">
 						</label>
 						<div class="err_msg">
-							<?php if(!empty($err_msg['post_img'])) echo $err_msg['post_img']; ?>
+							<?php getErrMsg('post_img'); ?>
 						</div>
 					</div>
 
 					<div class="btn-container" style="text-align: right;">
 						<input type="submit" name="delete" class="px-16 btn-gray btn-mid mr-24" value="削除">
-						<input type="submit" name="submit" class="btn-primary btn-mid" value="送信">
+						<input type="submit" name="submit" class="btn-primary btn-mid" value="送信" <?php if(empty($canpost_flg) && $newpost_flg != 1) echo 'disabled'; ?>>
 					</div>
 				</div>
 			</form>

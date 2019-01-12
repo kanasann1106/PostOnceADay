@@ -1,11 +1,15 @@
+<?php
+// 本人のユーザー情報を取得
+$myUserInfo = getUser($_SESSION['user_id']);
+?>
 <aside class="sideber">
 	<div class="prof-icon-wrap">
-		<img class="porf-icon" src="images/user-icon.png">
+		<img class="porf-icon" src="<?php echo showImg(sanitize($myUserInfo['user_img'])); ?>">
 	</div>
 	<ul class="prof">
-		<li class="username">メッテジさん</li>
+		<li class="username"><?php echo sanitize($myUserInfo['username']); ?></li>
 		<li class="user-msg px-32 mt-16">
-			こんにちは。こんにちは。こんにちは。こんにちは。こんにちは。こんにちは。
+			<?php echo sanitize($myUserInfo['msg']); ?>
 		</li>
 	</ul>
 	<?php

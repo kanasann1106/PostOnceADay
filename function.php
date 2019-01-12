@@ -57,8 +57,12 @@ define('MSG06', '文字以内で入力してください');
 define('MSG07', 'エラーが発生しました。しばらく経ってからやり直してください');
 define('MSG08', 'ユーザー名またはパスワードが違います');
 define('MSG09', 'そのEmailは既に登録されています');
+define('MSG10', '現在のパスワードが間違っています');
+define('MSG11', '現在のパスワードと同じです');
 // 成功時メッセージ
 define('SUC01', '登録しました');
+define('SUC02', 'プロフィールを変更しました');
+define('SUC03', 'パスワードを変更しました');
 
 /*-------------------------------
 	グローバル変数
@@ -156,7 +160,7 @@ function dbConnect(){
 	// DBへの接続準備
 	$dsn = 'mysql:dbname=PostedOnceADay;host=localhost;charset=utf8';
 	$user = 'root';
-	$password = '123511kN';
+	$password = 'root';
 	$options = array(
 		// SQL実行失敗時にはエラーコードのみ設定
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT,
@@ -184,16 +188,32 @@ function queryPost($dbh, $sql, $data){
 	debug('クエリ成功');
 	return $stmt;
 }
-// 投稿情報を取得
+function getUser($u_id){
+	debug('ユーザー情報を取得します。');
+
+	try{
+		$dbh = dbConnect();
+		$sql = 'SELECT * FROM users WHERE id = :u_id AND delete_flg = 0';
+		$data = array(':u_id' => $u_id);
+		// クエリ実行
+		$stmt = queryPost($dbh, $sql, $data);
+
+		if($stmt){
+			return $stmt->fetch(PDO::FETCH_ASSOC);
+		}else{
+			return false;
+		}
+	}catch(Exception $e){
+		error_log('エラー発生：'.$e->getMessage());
+	}
+}
 function getPost($u_id, $p_id){
 	debug('投稿情報を取得します。');
 	debug('ユーザID：'.$u_id);
 	debug('投稿ID：'.$p_id);
 
 	try{
-		// DB接続
 		$dbh = dbConnect();
-		// SQL文作成
 		$sql = 'SELECT * FROM post WHERE user_id = :u_id AND id = :p_id AND delete_flg = 0';
 		$data = array(':u_id' => $u_id, ':p_id' => $p_id);
 
@@ -209,14 +229,12 @@ function getPost($u_id, $p_id){
 		error_log('エラー発生：'.$e->getMessage());
 	}
 }
-// 全ての投稿情報を取得
-function getProductList(){
-	debug('投稿情報を取得');
+function getPostList(){
+	debug('全ての投稿情報を取得します。');
 
 	try{
-		// DBへ接続
 		$dbh = dbConnect();
-		$sql = 'SELECT * FROM post';
+		$sql = 'SELECT * FROM post WHERE delete_flg = 0 ORDER BY created_date DESC';
 		$data = array();
 		debug('SQL:'.$sql);
 
@@ -224,14 +242,69 @@ function getProductList(){
 		$stmt = queryPost($dbh, $sql, $data);
 
 		if($stmt){
-			// クエリ結果のデータ（全レコードを格納）
-			$result['data'] = $stmt->fetchAll();
-			return $result;
+			// クエリ結果のデータを全レコード返す
+			return $stmt->fetchAll();
+			 
 		}else{
 			return false;
 		}
 	}catch(Exception $e){
 		error_log('エラー発生：'. $e->getMessage());
+	}
+}
+function getPostData($p_id){
+	debug('投稿情報を取得します。');
+	debug('投稿ID：'.$p_id);
+	try{
+		$dbh = dbConnect();
+		$sql = 'SELECT * FROM post WHERE id = :p_id AND delete_flg = 0'; 
+		$data = array(':p_id' => $p_id);
+		// クエリ実行
+		$stmt = queryPost($dbh, $sql, $data);
+
+		if($stmt){
+			return $stmt->fetch(PDO::FETCH_ASSOC);
+		}else{
+			return false;
+		}
+	}catch(Exception $e){
+		error_log('エラー発生：'.$e->getMessage());
+	}
+}
+function getComment($p_id){
+	debug('コメントを取得します。');
+	try{
+		$dbh = dbConnect();
+		$sql = 'SELECT * FROM comment WHERE post_id = :p_id ORDER BY created_date DESC';
+		$data = array(':p_id' => $p_id);
+		// クエリ実行
+		$stmt = queryPost($dbh, $sql, $data);
+
+		if($stmt){
+			return $stmt->fetchAll();
+		}else{
+			return false;
+		}
+	}catch(Exception $e){
+		error_log('エラー発生：'.$e->getMessage());
+	}
+}
+function getMyPosts($u_id){
+	debug('My投稿情報を取得します。');
+	try{
+		$dbh = dbConnect();
+		$sql = 'SELECT * FROM post WHERE user_id = :u_id AND delete_flg = 0 ORDER BY created_date DESC'; 
+		$data = array(':u_id' => $u_id);
+		// クエリ実行
+		$stmt = queryPost($dbh, $sql, $data);
+
+		if($stmt){
+			return $stmt->fetchAll();
+		}else{
+			return false;
+		}
+	}catch(Exception $e){
+		error_log('エラー発生：'.$e->getMessage());
 	}
 }
 /*-------------------------------
@@ -242,34 +315,38 @@ function sanitize($str){
 	return htmlspecialchars($str,ENT_QUOTES);
 }
 //フォーム入力保持
-function getFormData($str){
+function getFormData($str, $flg = false){
+	if($flg){
+		$method = $_GET;
+	}else{
+		$method = $_POST;
+	}
 	global $dbFormData;
 	// ユーザーデータがある場合
 	if(!empty($dbFormData)){
 		//フォームのエラーがある場合
 		if(!empty($err_msg[$str])){
 			//POSTにデータがある場合
-			if(isset($_POST[$str])){
-				return sanitize($_POST[$str]);
+			if(isset($method[$str])){
+				return sanitize($method[$str]);
 			}else{
 				return sanitize($dbFormData[$str]);
 			}
 		}else{
 			// POSTにデータがあり、DBの情報と違う場合
-			if(isset($_POST[$str]) && $_POST[$str] !== $dbFormData[$str]){
-				return sanitize($_POST[$str]);
+			if(isset($method[$str]) && $method[$str] !== $dbFormData[$str]){
+				return sanitize($method[$str]);
 			}else{
 				// 変更しない
 				return sanitize($dbFormData[$str]);
 			}
 		}
 	}else{
-		if(isset($_POST[$str])){
-			return sanitize($_POST[$str]);
+		if(isset($method[$str])){
+			return sanitize($method[$str]);
 		}
 	}
 }
-// 画像処理
 function uploadImg($file, $key){
 	debug('画像アップロード処理開始');
 	debug('FILE情報：'.print_r($file,true));
@@ -311,10 +388,11 @@ function uploadImg($file, $key){
 		}
 	}
 }
-
-
-
-
-
-
-
+// 画像表示用関数
+function showImg($path){
+	if(empty($path)){
+		return 'images/user-icon.png';
+	}else{
+		return $path;
+	}
+}

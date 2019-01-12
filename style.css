@@ -162,17 +162,25 @@ main{
 	-moz-border-radius: 50%;
 	position: absolute;
 	top: 16px;
+	overflow: hidden;
+}
+.icon-wrap a{
+	display: block;
 }
 .user-icon{
-	max-width: 72px;
+	width: 100%;
 }
-.post-img{
-	max-width: 600px;
-	width: 96%;
+.post-img-wrap{
+	width: 98%;
+	max-height: 506px;
 	margin-top: 16px;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
+	overflow: hidden;
+}
+.post-img{
+	width: 100%;
 }
 .post .username,
 .post-detail .username,
@@ -187,7 +195,6 @@ main{
 .post time, .post-detail time{
 	color: #aaa;
 	position: absolute;
-	top: 24px;
 	right: 16px;
 }
 .post-wrap{
@@ -211,16 +218,10 @@ main{
 /*----------------------------------
 	投稿詳細
 -----------------------------------*/
-.post-detail{
-	background: #f5f5f5;
-	padding: 8px 80px;
-	margin: 4px auto;
-	position: relative;
-}
 .comment{
 	position: relative;
 	border: solid 1px #aaa;
-	padding: 8px;
+	padding: 8px 16px;
 	margin: 16px 0;
 }
 /*----------------------------------
@@ -299,7 +300,7 @@ input[type="submit"]:hover{
 	margin-bottom: 16px;
 	overflow:hidden;
 }
-.form .area-drop{
+.form .img-area{
 	position: relative;
 	color: #aaa;
 	background: #f6f5f5;
@@ -312,7 +313,7 @@ input[type="submit"]:hover{
 .form .input-file{
 	opacity: 0;
 	width: 100%;
-	height: 140px;
+	height: 127px;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -320,25 +321,32 @@ input[type="submit"]:hover{
 }
 .form .prev-img{
 	width: 100%;
+	height: 100%;
 	position: absolute;
 	top: 0;
 	left: 0;
+	object-fit: cover;
 }
-.prof-area-drop{
+/*アイコン画像アップロード*/
+.prof-img-area{
 	position: relative;
 	display: flex;
-  justify-content: center;
-  align-items: center;
+	justify-content: center;
+	align-items: center;
 	color: #aaa;
 	background: #f6f5f5;
 	border: 1px solid #ccc;
-	width: 38%;
-	height: 136px;
+	width: 32%;
+	height: 120px;
 	padding: 4px;
 	margin: 0 auto;
-	border-radius: 50%;
-	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
+	border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	overflow: hidden;
+}
+.user-icon{
+	text-align: center;
 }
 /*----------------------------------
 	マイページ
@@ -391,9 +399,12 @@ input[type="submit"]:hover{
 	top: -128px;
 	left: 24%;
 	z-index: 3;
+	overflow: hidden;
 }
 .porf-icon{
 	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 .menu{
 	text-align: center;

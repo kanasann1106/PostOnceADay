@@ -8,7 +8,29 @@ debug('「　投稿詳細ページ　');
 debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
 debugLogStart();
 
+/*-------------------------------
+	画面処理
+-------------------------------*/
+// 画像表示用データ取得
+// ------------------------------
+// 投稿IDのGETパラメータを取得
+$p_id = (!empty($_GET['p_id'])) ? $_GET['p_id'] : '';
+// DBから投稿データを取得
+$dbPostData = getPostData($p_id);
+// 投稿者の情報
+$dbPostUserInfo = getUser($dbPostData['user_id']);
 
+// DBからコメントを取得
+$dbCommentList = getComment($p_id);
+
+// パラメータに不正な値が入っているかチェック
+if(empty($dbPostData)){
+	error_log('エラー発生：指定ページに不正な値が入りました。');
+	header("Location:index.php");
+}
+debug('取得したDBデータ：'.print_r($dbPostData,true));
+
+debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 ?>
 <?php
 $siteTitle = '投稿詳細';
@@ -16,6 +38,25 @@ require('head.php');
 ?>
 
 <body>
+	<style>
+		.comment .icon-wrap{
+			width: 64px;
+			height: 64px;
+			background: #bee6cc;
+			border-radius: 50%;
+			-webkit-border-radius: 50%;
+			-moz-border-radius: 50%;
+			position: absolute;
+			top: 4px;
+			overflow: hidden;
+		}
+		.comment .post-wrap{
+			min-height: 48px;
+		}
+		.comment .post-head{
+			padding: 0 0 8px 0;
+		}
+	</style>
 	<!-- ヘッダー -->
 	<?php require('header.php'); ?>
 
@@ -23,28 +64,24 @@ require('head.php');
 	<main>
 		<div class="site-wrap">
 			<!-- 投稿詳細 -->
-			<section class="post-detail">
+			<section class="post">
 				<div class="icon-wrap">
-					<img class="user-icon" src="images/user-icon.png">
+					<img class="user-icon" src="<?php echo showImg(sanitize($dbPostUserInfo['user_img'])); ?>">
 				</div>
 				<div class="post-wrap">
 					<div class="post-head">
-						<a href="#" class="username">メッテジさん</a>
-						<time>2018/12/22</time>
+						<a href="#" class="username"><?php echo sanitize($dbPostUserInfo['username']); ?></a>
+						<time><?php echo date('Y/m/d H:i:s',strtotime(sanitize($dbPostData['created_date']))); ?></time>
 					</div>
 					<p>
-						文章が入ります。文章が入ります。文章が入ります。
-						文章が入ります。文章が入ります。文章が入ります。
-						文章が入ります。文章が入ります。文章が入ります。
-						文章が入ります。文章が入ります。文章が入ります。
-						文章が入ります。文章が入ります。文章が入ります。
-						文章が入ります。文章が入ります。文章が入ります。
-						文章が入ります。文章が入ります。文章が入ります。
-						文章が入ります。文章が入ります。文章が入ります。文章が入ります。
+						<?php echo sanitize($dbPostData['contents']); ?>
 					</p>
+					<div class="post-img-wrap">
+						<img class="post-img" src="<?php echo sanitize($dbPostData['post_img']); ?>">
+					</div>
 					<div class="post-foot">
 						<div class="btn-comment">
-							<a class="link-nomal" href="comment.php">
+							<a class="link-nomal" href="comment.php?p_id=<?php echo $dbPostData['id']; ?>">
 								<i class="far fa-comment-alt fa-lg px-16"></i>2
 							</a>
 						</div>
@@ -53,38 +90,28 @@ require('head.php');
 						</div>
 					</div>
 					<!-- コメント一覧 -->
+					<?php
+						foreach ($dbCommentList as $key => $val):
+							$dbCommentUserId = $dbCommentList[$key]['user_id'];
+							$dbCommentUserInfo = getUser($dbCommentUserId);
+					?>
 					<section class="comment">
 						<div class="icon-wrap">
 							<img class="user-icon" src="images/user-icon2.png">
 						</div>
 						<div class="post-wrap">
 							<div class="post-head">
-								<a href="#" class="username">ケェさん</a>
-								<time>2018/12/22</time>
+								<a href="#" class="username"><?php echo sanitize($dbCommentUserInfo['username']); ?></a>
+								<time><?php echo date('Y/m/d H:i:s',strtotime(sanitize($val['created_date']))); ?></time>
 							</div>
 							<p>
-								コメントが入ります。コメントが入ります。コメントが入ります。
-								コメントが入ります。コメントが入ります。コメントが入ります。
+								<?php echo sanitize($val['comment']); ?>
 							</p>
 						</div>
 					</section>
-					<section class="comment">
-						<div class="icon-wrap">
-							<img class="user-icon" src="images/user-icon2.png">
-						</div>
-						<div class="post-wrap">
-							<div class="post-head">
-								<a href="#" class="username">ケェさん</a>
-								<time>2018/12/22</time>
-							</div>
-							<p>
-								コメントが入ります。コメントが入ります。コメントが入ります。
-								コメントが入ります。コメントが入ります。コメントが入ります。
-								コメントが入ります。コメントが入ります。コメントが入ります。
-								コメントが入ります。コメントが入ります。コメントが入ります。
-							</p>
-						</div>
-					</section>
+					<?php
+						endforeach;
+					?>
 				</div>
 			</section>
 		</div>
