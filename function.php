@@ -290,7 +290,7 @@ function getComment($p_id){
 		error_log('エラー発生：'.$e->getMessage());
 	}
 }
-function getMyPosts($u_id){
+function getMyPostList($u_id){
 	debug('My投稿情報を取得します。');
 	try{
 		$dbh = dbConnect();

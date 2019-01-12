@@ -8,13 +8,22 @@ debugLogStart();
 /*---------------------------
 	画面処理
 ----------------------------*/
-$dbPosttList = '';
+$dbPostList = '';
 $dbPostUserId = '';
 $dbPostUserInfo = '';
-// --------------------------
-// DBから投稿情報を取得
-$dbPostList = getPostList();
 
+// --------------------------
+// マイページの場合自分の投稿だけ表示する
+if(isset($mypage_flg)){
+	// DBから自分の投稿情報を取得
+	global $dbPostList;
+	$dbPostList = getMyPostList($_SESSION['user_id']);
+}else{
+	// DBから全ての投稿情報を取得
+	global $dbPostList;
+	$dbPostList = getPostList();
+}
+debug(print_r($dbPostList,true));
 foreach($dbPostList as $key => $val):
 	$dbPostUserId = $dbPostList[$key]['user_id'];
 	$dbPostUserInfo = getUser($dbPostUserId);

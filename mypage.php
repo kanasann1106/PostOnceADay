@@ -10,6 +10,9 @@ debugLogStart();
 
 // ログイン認証
 require('auth.php');
+// 現在マイページか判断するためのフラグ
+$mypage_flg = (!empty($_SESSION['user_id'])) ? false : true;
+
 ?>
 <?php
 $siteTitle = (!empty($_SESSION['user_id'])) ? 'マイページ' : 'ユーザーページ';
