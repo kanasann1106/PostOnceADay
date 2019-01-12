@@ -95,6 +95,7 @@ main{
 .site-wrap{
 	width: 720px;
 	margin: 0 auto;
+	position: relative;
 }
 .flex-b{
 	display: flex;
@@ -326,6 +327,25 @@ input[type="submit"]:hover{
 	top: 0;
 	left: 0;
 	object-fit: cover;
+}
+/*投稿禁止のメッセージ*/
+.nopost-msg{
+	width: 580px;
+	height: 680px;
+	margin: 0 auto;
+	background-color: #ffffffd6;
+	position: absolute;
+	top: 0;
+	left: 70px;
+	font-size: 21px;
+	font-weight: bold;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.nopost-msg i{
+	line-height: 80px;
 }
 /*アイコン画像アップロード*/
 .prof-img-area{

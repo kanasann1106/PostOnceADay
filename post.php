@@ -54,8 +54,8 @@ if(!empty(getMyPosts($_SESSION['user_id']))){
 	
 	// 現在日時が最新投稿日時よりも大きければフラグ１を立てる
 	$canpost_flg = (($unix_latest_date + $date_limit) < time()) ? true : false;
-
-	// ($canpost_flg==1) ? debug('投稿できます') : debug('投稿して24時間経っていないため投稿不可');
+	// 次回投稿可能な日時
+	$canpost_date = date('Y/m/d H:i:s',($unix_latest_date + $date_limit));
 
 	debug('最新の投稿日時：'.$myposts[0]['created_date']);
 	debug('次回投稿可能な日時：'.date('Y/m/d H:i:s',($unix_latest_date + $date_limit)));
@@ -167,6 +167,20 @@ require('head.php');
 					</div>
 				</div>
 			</form>
+			<!-- 投稿不可時に表示 -->
+			<?php
+				if(empty($canpost_flg) && $newpost_flg!= 1){
+			?>
+				<div class="nopost-msg">
+					<i class="fas fa-exclamation-triangle">
+						1日1投稿です！<br>
+						<?php echo $canpost_date; ?>以降に投稿ができます。
+					</i>
+					
+				</div>
+			<?php
+				}
+			?>
 		</div>
 	</main>
 
