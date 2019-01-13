@@ -8,26 +8,38 @@ debug('「　投稿詳細ページ　');
 debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
 debugLogStart();
 
+// ログイン認証
+require('auth.php');
 /*-------------------------------
 	画面処理
 -------------------------------*/
+$p_id = '';
+$dbPostData = '';
+$dbPostUserInfo = '';
+$dbCommentList = '';
+
 // 画像表示用データ取得
 // ------------------------------
-// 投稿IDのGETパラメータを取得
-$p_id = (!empty($_GET['p_id'])) ? $_GET['p_id'] : '';
-// DBから投稿データを取得
-$dbPostData = getPostData($p_id);
-// 投稿者の情報
-$dbPostUserInfo = getUser($dbPostData['user_id']);
+// get送信がある場合
+if(!empty($_GET['post_id'])){
 
-// DBからコメントを取得
-$dbCommentList = getComment($p_id);
+	// 投稿IDのGETパラメータを取得
+	$p_id = $_GET['post_id'];
+	// DBから投稿データを取得
+	$dbPostData = getPostData($p_id);
+	// 投稿者の情報
+	$dbPostUserInfo = getUser($dbPostData['user_id']);
 
-// パラメータに不正な値が入っているかチェック
-if(empty($dbPostData)){
-	error_log('エラー発生：指定ページに不正な値が入りました。');
-	header("Location:index.php");
+	// DBからコメントを取得
+	$dbCommentList = getComment($p_id);
+
+	// パラメータに不正な値が入っているかチェック
+	if(empty($dbPostData)){
+		error_log('エラー発生：指定ページに不正な値が入りました。');
+		header("Location:index.php");
+	}
 }
+
 debug('取得したDBデータ：'.print_r($dbPostData,true));
 
 debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');

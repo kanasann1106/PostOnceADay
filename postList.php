@@ -27,9 +27,8 @@ debug(print_r($dbPostList,true));
 foreach($dbPostList as $key => $val):
 	$dbPostUserId = $dbPostList[$key]['user_id'];
 	$dbPostUserInfo = getUser($dbPostUserId);
-
 ?>
-<article class="post">
+<article class="post" data-postid="<?php echo sanitize($dbPostList[$key]['id']); ?>">
 	<div class="icon-wrap">
 		<a href="mypage.php?u_name=">
 			<img class="user-icon" src="<?php echo showImg(sanitize($dbPostUserInfo['user_img'])); ?>">

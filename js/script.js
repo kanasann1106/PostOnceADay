@@ -1,9 +1,28 @@
 $(function(){
 
 	// 投稿一覧から投稿詳細へ遷移
-	$('.post').on('click',function(){
-		location.href = 'postDetail.php';
-	});
+	var $post,
+			postId;
+	$post = $('.post') || null;
+	postId = $post.data('postid') || null;
+
+	if(postId !== undefined && postId !== null){
+		$post.on('click',function(){
+			var $this = $(this);
+			$.ajax({
+				type: "GET",
+				url: "postDetail.php?",
+				data: {post_id: postId},
+				success: function(data){
+					console.log('Ajax Success');
+					console.log(postId);
+				},
+				error: function(err){
+					console.log('Ajax Error');
+				}
+			});
+		});
+	}
 
 	// 文字数カウンター
 	$('#js-countup').on('keyup', function(e){

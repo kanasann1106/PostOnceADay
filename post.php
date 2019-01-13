@@ -38,10 +38,10 @@ if(!empty($p_id) && empty($dbFormData)){
 $canpost_flg = ''; // 投稿可能フラグ
 $newpost_flg = ''; // 初投稿フラグ
 
-if(!empty(getMyPosts($_SESSION['user_id']))){
+if(!empty(getMyPostList($_SESSION['user_id']))){
 	$newpost_flg = false;
 	// my投稿情報取得
-	$myposts = getMyPosts($_SESSION['user_id']);
+	$myposts = getMyPostList($_SESSION['user_id']);
 	debug('マイ投稿：'.print_r($myposts,true));
 
 	// 最新の投稿日時
