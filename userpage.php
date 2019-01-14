@@ -10,8 +10,11 @@ debugLogStart();
 
 // ログイン認証
 require('auth.php');
-// 現在マイページか判断するためのフラグ
-$mypage_flg = (!empty($_SESSION['user_id'])) ? false : true;
+$u_id = $_GET['u_id'];
+
+if(empty(getUser($u_id))){
+	header("Location:index.php");
+}
 
 ?>
 <?php
@@ -48,7 +51,7 @@ require('head.php');
 						//退会ポップアップ
 						require('withdraw.php');
 					}else{
-						header("Location:mypage.php"); //マイページへ
+						header("Location:userpage.php?u_id=".$_SESSION['user_id']); //マイページへ
 					}
 				?>
 			</section>

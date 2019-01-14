@@ -1,27 +1,14 @@
 $(function(){
 
-	// 投稿一覧から投稿詳細へ遷移
-	var $post,
-			postId;
-	$post = $('.post') || null;
-	postId = $post.data('postid') || null;
-
-	if(postId !== undefined && postId !== null){
+	// 投稿一覧から投稿詳細ページへ遷移
+	var $post = $('.post') || null;
+	if($post !== null){
 		$post.on('click',function(){
-			var $this = $(this);
-			$.ajax({
-				type: "GET",
-				url: "postDetail.php?",
-				data: {post_id: postId},
-				success: function(data){
-					console.log('Ajax Success');
-					console.log(postId);
-				},
-				error: function(err){
-					console.log('Ajax Error');
-				}
-			});
+			var postId = $(this).data('postid');
+			window.location.href = 'postDetail.php?p_id='+postId;
 		});
+	}else{
+		window.location.href = 'index.php';
 	}
 
 	// 文字数カウンター

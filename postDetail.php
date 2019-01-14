@@ -21,12 +21,13 @@ $dbCommentList = '';
 // 画像表示用データ取得
 // ------------------------------
 // get送信がある場合
-if(!empty($_GET['post_id'])){
+if(!empty($_GET['p_id'])){
 
 	// 投稿IDのGETパラメータを取得
-	$p_id = $_GET['post_id'];
+	$p_id = $_GET['p_id'];
 	// DBから投稿データを取得
 	$dbPostData = getPostData($p_id);
+	debug('取得したDBデータ：'.print_r($dbPostData,true));
 	// 投稿者の情報
 	$dbPostUserInfo = getUser($dbPostData['user_id']);
 
@@ -38,9 +39,10 @@ if(!empty($_GET['post_id'])){
 		error_log('エラー発生：指定ページに不正な値が入りました。');
 		header("Location:index.php");
 	}
+	debug('取得したDBデータ：'.print_r($dbPostData,true));
 }
 
-debug('取得したDBデータ：'.print_r($dbPostData,true));
+
 
 debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 ?>

@@ -48,7 +48,7 @@ if(!empty($_POST)){
 
 	}else{
 		debug('退会をキャンセル(mypageに遷移)');
-		header("Location:mypage.php");
+		header("Location:userpage.php?u_id=".$_SESSION['user_id']);
 	}
 }
 debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');

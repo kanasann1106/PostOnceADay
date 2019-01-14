@@ -5,38 +5,39 @@ debug('「　投稿一覧　');
 debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
 debugLogStart();
 
-/*---------------------------
+/*-------------------------------
 	画面処理
-----------------------------*/
+-------------------------------*/
 $dbPostList = '';
 $dbPostUserId = '';
 $dbPostUserInfo = '';
-
-// --------------------------
-// マイページの場合自分の投稿だけ表示する
-if(isset($mypage_flg)){
-	// DBから自分の投稿情報を取得
-	global $dbPostList;
-	$dbPostList = getMyPostList($_SESSION['user_id']);
+/*---------------------------
+	投稿一覧の表示処理
+----------------------------*/
+if(isset($u_id)){
+	// DBからユーザーIDと一致した投稿情報を取得
+	// global $dbPostList;
+	$dbPostList = getMyPostList($u_id);
 }else{
 	// DBから全ての投稿情報を取得
-	global $dbPostList;
+	// global $dbPostList;
 	$dbPostList = getPostList();
 }
-debug(print_r($dbPostList,true));
+
 foreach($dbPostList as $key => $val):
-	$dbPostUserId = $dbPostList[$key]['user_id'];
-	$dbPostUserInfo = getUser($dbPostUserId);
+$dbPostUserId = $dbPostList[$key]['user_id'];
+$dbPostUserInfo = getUser($dbPostUserId);
+
 ?>
 <article class="post" data-postid="<?php echo sanitize($dbPostList[$key]['id']); ?>">
 	<div class="icon-wrap">
-		<a href="mypage.php?u_name=">
+		<a href="userpage.php?u_id=<?php echo sanitize($dbPostUserId); ?>">
 			<img class="user-icon" src="<?php echo showImg(sanitize($dbPostUserInfo['user_img'])); ?>">
 		</a>
 	</div>
 	<div class="post-wrap">
 		<div class="post-head">
-			<a href="mypage.php?u_name=" class="username"><?php echo sanitize($dbPostUserInfo['username']); ?></a>
+			<a href="userpage.php?u_id=<?php echo sanitize($dbPostUserId); ?>" class="username"><?php echo sanitize($dbPostUserInfo['username']); ?></a>
 			<time><?php echo date('Y/m/d H:i:s',strtotime(sanitize($val['created_date']))); ?></time>
 		</div>
 		<p>

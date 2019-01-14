@@ -13,7 +13,7 @@
 					}else{
 				?>	<!-- ログイン済み -->
 						<li><a class="btn-primary" href="post.php"><i class="fas fa-pencil-alt fa-lg mr-16"></i>投稿</a></li>
-						<li><a href="mypage.php"><i class="fas fa-home fa-2x pt-10"></i></a></li>
+						<li><a href="userpage.php?u_id=<?php echo $_SESSION['user_id'] ?>"><i class="fas fa-home fa-2x pt-10"></i></a></li>
 				<?php
 					}
 				?>

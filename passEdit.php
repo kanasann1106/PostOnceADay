@@ -59,7 +59,7 @@ if(!empty($_POST)){
 					// クエリ成功の場合
 					if($stmt){
 						$_SESSION['msg_success'] = SUC03;
-						header("Location:mypage.php");
+						header("Location:userpage.php?u_id=".$_SESSION['user_id']);
 					}
 				}catch(Exception $e){
 					error_log('エラー発生：'.$e->getMessage());

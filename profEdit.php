@@ -69,7 +69,7 @@ if(!empty($_POST)){
 			if($stmt){
 				$_SESSION['msg_success'] = SUC02;
 				debug('マイページへ遷移します。');
-				header("Location:mypage.php");
+				header("Location:userpage.php?u_id=".$_SESSION['user_id']);
 			}
 		}catch(Exception $e){
 			error_log('エラー発生：'.$e->getMessage());
