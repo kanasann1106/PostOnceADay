@@ -11,6 +11,7 @@ debugLogStart();
 $dbPostList = '';
 $dbPostUserId = '';
 $dbPostUserInfo = '';
+$dbPostComment = '';
 /*---------------------------
 	投稿一覧の表示処理
 ----------------------------*/
@@ -27,6 +28,8 @@ if(isset($u_id)){
 foreach($dbPostList as $key => $val):
 $dbPostUserId = $dbPostList[$key]['user_id'];
 $dbPostUserInfo = getUser($dbPostUserId);
+// コメント取得
+$dbPostComment = getComment($dbPostList[$key]['id']);
 
 ?>
 <article class="post" data-postid="<?php echo sanitize($dbPostList[$key]['id']); ?>">
@@ -50,7 +53,7 @@ $dbPostUserInfo = getUser($dbPostUserId);
 		<div class="post-foot">
 			<div class="btn-comment">
 				<a class="link-nomal" href="comment.php?p_id=<?php echo $val['id']; ?>">
-					<i class="far fa-comment-alt fa-lg px-16"></i>2
+					<i class="far fa-comment-alt fa-lg px-16"></i><?php echo count($dbPostComment); ?>
 				</a>
 			</div>
 			<div class="btn-like">

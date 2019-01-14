@@ -10,11 +10,20 @@ debugLogStart();
 
 // ログイン認証
 require('auth.php');
+/*-------------------------------
+	画面処理
+-------------------------------*/
 $u_id = $_GET['u_id'];
-
-if(empty(getUser($u_id))){
+$dbPostData = '';
+// ------------------------------
+// get送信がある場合
+if(!empty($_GET['u_id']) && !empty(getUser($u_id))){
+	$dbPostData = getMyPostList($u_id);
+	debug('投稿数:'.count($dbPostData));
+}else{
 	header("Location:index.php");
 }
+
 
 ?>
 <?php
@@ -29,7 +38,7 @@ require('head.php');
 	<!-- メインコンテンツ -->
 	<main>
 		<div class="post-info">
-			<span style="padding-left: 22%; margin-right: 24px;">投稿：90</span><span>いいね：120</span>
+			<span style="padding-left: 22%; margin-right: 24px;">投稿：<?php echo count($dbPostData); ?></span><span>いいね：120</span>
 		</div>
 
 		<div class="mypage-wrap">

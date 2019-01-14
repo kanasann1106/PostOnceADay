@@ -1,6 +1,6 @@
 <header>
 	<div class="flex-b">
-		<h1><a href="index.php">PORTFOLIO</a></h1>
+		<h1><a href="index.php">POAD -PostOnceADay-</a></h1>
 		<nav id="top-nav">
 			<ul>
 				

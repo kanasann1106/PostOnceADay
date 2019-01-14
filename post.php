@@ -97,10 +97,12 @@ if(!empty($_POST)){
 				debug('DB更新です。');
 				$sql = 'UPDATE post SET contents = :contents, post_img = :post_img WHERE user_id = :u_id AND id = :p_id';
 				$data = array(':contents' => $contents, ':post_img' => $post_img, ':u_id' => $_SESSION['user_id'], ':p_id' => $p_id);
-			}else{
+			}elseif($canpost_flg || $newpost_flg){
 				debug('DB新規登録です。');
 				$sql = 'INSERT INTO post (contents, post_img, user_id, created_date) VALUES (:contents, :post_img, :u_id, :date)';
 				$data = array(':contents' => $contents, ':post_img' => $post_img, ':u_id' => $_SESSION['user_id'], ':date' => date('Y-m-d H:i:s'));
+			}else{
+				header("Location:index.php");
 			}
 			debug('SQL:'.$sql);
 			debug('流し込みデータ：'.print_r($data,true));

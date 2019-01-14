@@ -343,6 +343,7 @@ input[type="submit"]:hover{
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 10;
 }
 .nopost-msg i{
 	line-height: 80px;

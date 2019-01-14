@@ -290,6 +290,7 @@ function getComment($p_id){
 		error_log('エラー発生：'.$e->getMessage());
 	}
 }
+
 function getMyPostList($u_id){
 	debug('My投稿情報を取得します。');
 	try{

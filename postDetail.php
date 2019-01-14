@@ -40,9 +40,9 @@ if(!empty($_GET['p_id'])){
 		header("Location:index.php");
 	}
 	debug('取得したDBデータ：'.print_r($dbPostData,true));
+}else{
+	header("Location:index.php");
 }
-
-
 
 debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 ?>
@@ -96,7 +96,7 @@ require('head.php');
 					<div class="post-foot">
 						<div class="btn-comment">
 							<a class="link-nomal" href="comment.php?p_id=<?php echo $dbPostData['id']; ?>">
-								<i class="far fa-comment-alt fa-lg px-16"></i>2
+								<i class="far fa-comment-alt fa-lg px-16"></i><?php echo count($dbCommentList); ?>
 							</a>
 						</div>
 						<div class="btn-like">
