@@ -17,6 +17,8 @@ $p_id = '';
 $dbPostData = '';
 $dbPostUserInfo = '';
 $dbCommentList = '';
+// いいね数取得
+$dbPostGoodNum = '';
 
 // 画像表示用データ取得
 // ------------------------------
@@ -33,6 +35,8 @@ if(!empty($_GET['p_id'])){
 
 	// DBからコメントを取得
 	$dbCommentList = getComment($p_id);
+	// DBからコメントを取得
+	$dbPostGoodNum = count(getGood($p_id));
 
 	// パラメータに不正な値が入っているかチェック
 	if(empty($dbPostData)){
@@ -80,11 +84,13 @@ require('head.php');
 			<!-- 投稿詳細 -->
 			<section class="post">
 				<div class="icon-wrap">
-					<img class="user-icon" src="<?php echo showImg(sanitize($dbPostUserInfo['user_img'])); ?>">
+					<a href="userpage.php?u_id=<?php echo sanitize($dbPostUserInfo['id']); ?>">
+						<img class="user-icon" src="<?php echo showImg(sanitize($dbPostUserInfo['user_img'])); ?>">
+					</a>
 				</div>
 				<div class="post-wrap">
 					<div class="post-head">
-						<a href="#" class="username"><?php echo sanitize($dbPostUserInfo['username']); ?></a>
+						<a href="userpage.php?u_id=<?php echo sanitize($dbPostUserInfo['id']); ?>" class="username"><?php echo sanitize($dbPostUserInfo['username']); ?></a>
 						<time><?php echo date('Y/m/d H:i:s',strtotime(sanitize($dbPostData['created_date']))); ?></time>
 					</div>
 					<p>
@@ -100,7 +106,7 @@ require('head.php');
 							</a>
 						</div>
 						<div class="btn-like">
-							<i class="far fa-heart fa-lg like-i px-16"></i>39
+							<i class="far fa-heart fa-lg like-i px-16"></i><?php echo $dbPostGoodNum ?>
 						</div>
 					</div>
 					<!-- コメント一覧 -->
@@ -111,11 +117,13 @@ require('head.php');
 					?>
 					<section class="comment">
 						<div class="icon-wrap">
-							<img class="user-icon" src="<?php echo showImg(sanitize($dbCommentUserInfo['user_img'])); ?>">
+							<a href="userpage.php?u_id=<?php echo sanitize($dbCommentUserInfo['id']); ?>">
+								<img class="user-icon" src="<?php echo showImg(sanitize($dbCommentUserInfo['user_img'])); ?>">
+							</a>
 						</div>
 						<div class="post-wrap">
 							<div class="post-head">
-								<a href="#" class="username"><?php echo sanitize($dbCommentUserInfo['username']); ?></a>
+								<a href="userpage.php?u_id=<?php echo sanitize($dbCommentUserInfo['id']); ?>" class="username"><?php echo sanitize($dbCommentUserInfo['username']); ?></a>
 								<time><?php echo date('Y/m/d H:i:s',strtotime(sanitize($val['created_date']))); ?></time>
 							</div>
 							<p>

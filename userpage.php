@@ -15,11 +15,12 @@ require('auth.php');
 -------------------------------*/
 $u_id = $_GET['u_id'];
 $dbPostData = '';
+$dbPostGoodNum = '';
 // ------------------------------
 // get送信がある場合
 if(!empty($_GET['u_id']) && !empty(getUser($u_id))){
 	$dbPostData = getMyPostList($u_id);
-	debug('投稿数:'.count($dbPostData));
+	$dbPostGoodNum = getMyGood($u_id);
 }else{
 	header("Location:index.php");
 }
@@ -38,7 +39,7 @@ require('head.php');
 	<!-- メインコンテンツ -->
 	<main>
 		<div class="post-info">
-			<span style="padding-left: 22%; margin-right: 24px;">投稿：<?php echo count($dbPostData); ?></span><span>いいね：120</span>
+			<span style="padding-left: 22%; margin-right: 24px;">投稿：<?php echo count($dbPostData); ?></span><span>いいね：<?php echo count($dbPostGoodNum); ?></span>
 		</div>
 
 		<div class="mypage-wrap">

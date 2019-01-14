@@ -1,7 +1,7 @@
 $(function(){
 
 	// 投稿一覧から投稿詳細ページへ遷移
-	var $post = $('.post') || null;
+	var $post = $('.js-post-click') || null;
 	if($post !== null){
 		$post.on('click',function(){
 			var postId = $(this).data('postid');

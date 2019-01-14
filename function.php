@@ -276,7 +276,7 @@ function getComment($p_id){
 	debug('コメントを取得します。');
 	try{
 		$dbh = dbConnect();
-		$sql = 'SELECT * FROM comment WHERE post_id = :p_id ORDER BY created_date DESC';
+		$sql = 'SELECT * FROM comment WHERE post_id = :p_id AND delete_flg = 0 ORDER BY created_date DESC';
 		$data = array(':p_id' => $p_id);
 		// クエリ実行
 		$stmt = queryPost($dbh, $sql, $data);
@@ -290,7 +290,24 @@ function getComment($p_id){
 		error_log('エラー発生：'.$e->getMessage());
 	}
 }
+function getGood($p_id){
+	debug(' いいねを取得します');
+	try {
+		$dbh = dbConnect();
+		$sql = 'SELECT * FROM good WHERE post_id = :p_id';
+		$data = array(':p_id' => $p_id);
+		// クエリ実行
+		$stmt = queryPost($dbh, $sql, $data);
 
+		if($stmt){
+			return $stmt->fetchAll();
+		}else{
+			return false;
+		}
+	} catch (Exception $e) {
+		error_log('エラー発生：'.$e->getMessage());
+	}
+}
 function getMyPostList($u_id){
 	debug('My投稿情報を取得します。');
 	try{
@@ -306,6 +323,24 @@ function getMyPostList($u_id){
 			return false;
 		}
 	}catch(Exception $e){
+		error_log('エラー発生：'.$e->getMessage());
+	}
+}
+function getMyGood($u_id){
+	debug(' 自分のいいねを取得します');
+	try {
+		$dbh = dbConnect();
+		$sql = 'SELECT * FROM good WHERE user_id = :u_id';
+		$data = array(':u_id' => $u_id);
+		// クエリ実行
+		$stmt = queryPost($dbh, $sql, $data);
+
+		if($stmt){
+			return $stmt->fetchAll();
+		}else{
+			return false;
+		}
+	} catch (Exception $e) {
 		error_log('エラー発生：'.$e->getMessage());
 	}
 }

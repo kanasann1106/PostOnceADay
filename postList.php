@@ -30,9 +30,11 @@ $dbPostUserId = $dbPostList[$key]['user_id'];
 $dbPostUserInfo = getUser($dbPostUserId);
 // コメント取得
 $dbPostComment = getComment($dbPostList[$key]['id']);
+// いいね数取得
+$dbPostGood = getGood($dbPostList[$key]['id']);
 
 ?>
-<article class="post" data-postid="<?php echo sanitize($dbPostList[$key]['id']); ?>">
+<article class="post js-post-click" data-postid="<?php echo sanitize($dbPostList[$key]['id']); ?>">
 	<div class="icon-wrap">
 		<a href="userpage.php?u_id=<?php echo sanitize($dbPostUserId); ?>">
 			<img class="user-icon" src="<?php echo showImg(sanitize($dbPostUserInfo['user_img'])); ?>">
@@ -57,7 +59,7 @@ $dbPostComment = getComment($dbPostList[$key]['id']);
 				</a>
 			</div>
 			<div class="btn-like">
-				<i class="far fa-heart fa-lg like-i px-16"></i>39
+				<i class="far fa-heart fa-lg like-i px-16"></i><?php echo count($dbPostGood); ?>
 			</div>
 		</div>
 	</div>
