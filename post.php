@@ -165,13 +165,13 @@ require('head.php');
 
 					<div class="btn-container" style="text-align: right;">
 						<input type="submit" name="delete" class="px-16 btn-gray btn-mid mr-24" value="削除">
-						<input type="submit" name="submit" class="btn-primary btn-mid" value="送信" <?php if(empty($canpost_flg) && $newpost_flg != 1) echo 'disabled'; ?>>
+						<input type="submit" name="submit" class="btn-primary btn-mid" value="送信" <?php if(empty($canpost_flg) && empty($newpost_flg)) echo 'disabled'; ?>>
 					</div>
 				</div>
 			</form>
 			<!-- 投稿不可時に表示 -->
 			<?php
-				if(empty($canpost_flg) && $newpost_flg!= 1){
+				if(empty($canpost_flg) && empty($newpost_flg)){
 			?>
 				<div class="nopost-msg">
 					<i class="fas fa-exclamation-triangle">
