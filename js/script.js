@@ -5,12 +5,12 @@ $(function(){
 	if($post !== null){
 		$post.on('click',function(){
 			var postId = $(this).data('postid');
-			window.location.href = 'postDetail.php?p_id='+postId;
+			window.location.href = 'postDetail.php?p_id=' + postId;
 		});
 	}else{
 		window.location.href = 'index.php';
 	}
-
+	
 	// 文字数カウンター
 	$('#js-countup').on('keyup', function(e){
 		var count = $(this).val().replace(/\n/g, '').length; //改行は文字数に含めない
@@ -43,5 +43,31 @@ $(function(){
 		fileReader.readAsDataURL(file);
 	});
 
+	// いいね機能
+	var $good = $('.btn-good'), //詳細のいいね!ボタン
+			goodPostId;
 
+	$good.on('click',function(e){
+		e.stopPropagation();
+		var $this = $(this);
+		goodPostId = $this.parents('.post').data('postid'); //投稿ID取得
+		$.ajax({
+			type: 'POST',
+			url: 'ajaxGood.php',
+			data: { postId: goodPostId}
+		 }).done(function(data){
+		 		console.log('Ajax Success');
+
+		 		// いいねの総数を表示
+				$this.children('span').html(data);
+				// いいね取り消しのスタイル
+				$this.children('i').toggleClass('far'); //空洞ハート
+				// いいね押した時のスタイル
+				$this.children('i').toggleClass('fas'); //塗りつぶしハート
+				$this.children('i').toggleClass('active');
+				$this.toggleClass('active');
+			}).fail(function(msg) {
+				console.log('Ajax Error');
+			});
+		});
 });
