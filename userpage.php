@@ -19,13 +19,11 @@ $dbPostGoodNum = '';
 // ------------------------------
 // get送信がある場合
 if(!empty($_GET['u_id']) && !empty(getUser($u_id))){
-	$dbPostData = getMyPostList($u_id);
-	$dbPostGoodNum = getMyGood($u_id);
+	$dbPostData = getUserPostList($u_id);
+	$dbPostGoodNum = count(getUserGoodPostList($u_id));
 }else{
 	header("Location:index.php");
 }
-
-
 ?>
 <?php
 $siteTitle = (!empty($_SESSION['user_id'])) ? 'マイページ' : 'ユーザーページ';
@@ -39,7 +37,10 @@ require('head.php');
 	<!-- メインコンテンツ -->
 	<main>
 		<div class="post-info">
-			<span style="padding-left: 22%; margin-right: 24px;">投稿：<?php echo count($dbPostData); ?></span><span>いいね：<?php echo count($dbPostGoodNum); ?></span>
+			<span style="padding-left: 22%; margin-right: 24px;">
+				<a class="mr-24" href="userpage.php?u_id=<?php echo sanitize($u_id); ?>">投稿：<?php echo count($dbPostData); ?></a>
+				<a href="userpage.php?u_id=<?php echo sanitize($u_id).'&good=exist'; ?>">いいね：<?php echo $dbPostGoodNum; ?></a>
+				<span class="setting"><i class="fas fa-cog fa-lg"></i></span>
 		</div>
 
 		<div class="mypage-wrap">
@@ -61,6 +62,7 @@ require('head.php');
 						//退会ポップアップ
 						require('withdraw.php');
 					}else{
+						debug('maimomo');
 						header("Location:userpage.php?u_id=".$_SESSION['user_id']); //マイページへ
 					}
 				?>

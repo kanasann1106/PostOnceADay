@@ -11,27 +11,41 @@ debugLogStart();
 $dbPostList = '';
 $dbPostUserId = '';
 $dbPostUserInfo = '';
-$dbPostComment = '';
+$dbPostCommentNum = '';
+$dbPostGoodNum = '';
+$edit_flg = '';
 /*---------------------------
 	投稿一覧の表示処理
 ----------------------------*/
-if(isset($u_id)){
+
+if(isset($u_id) && !empty($_GET['good'])){
+	// いいねした投稿を取得
+	debug('ユーザーのいいねした投稿を取得');
+	global $dbPostList;
+	$dbPostList = getUserGoodPostList($u_id);
+}elseif(isset($u_id)){
 	// DBからユーザーIDと一致した投稿情報を取得
-	// global $dbPostList;
-	$dbPostList = getMyPostList($u_id);
+	debug('ユーザーの投稿を取得');
+	global $dbPostList;
+	$dbPostList = getUserPostList($u_id);
 }else{
 	// DBから全ての投稿情報を取得
-	// global $dbPostList;
+	debug('全ての投稿を取得');
+	global $dbPostList;
 	$dbPostList = getPostList();
 }
-
-foreach($dbPostList as $key => $val):
-$dbPostUserId = $dbPostList[$key]['user_id'];
-$dbPostUserInfo = getUser($dbPostUserId);
-// コメント取得
-$dbPostComment = getComment($dbPostList[$key]['id']);
-// いいね数取得
-$dbPostGood = getGood($dbPostList[$key]['id']);
+if(!empty($dbPostList)){
+	// 投稿情報がある場合は表示
+	foreach($dbPostList as $key => $val):
+	$dbPostUserId = $dbPostList[$key]['user_id'];
+	$dbPostUserInfo = getUser($dbPostUserId);
+	// コメント数取得
+	$dbPostCommentNum = count(getComment($dbPostList[$key]['id']));
+	// いいね数取得
+	$dbPostGoodNum = count(getGood($dbPostList[$key]['id']));
+	// 自分の投稿には編集フラグを立てる
+	$edit_flg = (!empty($_SESSION['user_id']) && 
+								$dbPostList[$key]['user_id'] === $_SESSION['user_id']) ? true : false;
 
 ?>
 <article class="post js-post-click" data-postid="<?php echo sanitize($dbPostList[$key]['id']); ?>">
@@ -48,23 +62,42 @@ $dbPostGood = getGood($dbPostList[$key]['id']);
 		<p>
 			<?php echo $val['contents']; ?>
 		</p>
+		<?php if(!empty($val['post_img'])): ?>
 		<div class="post-img-wrap">
 			<img class="post-img" src="<?php echo sanitize($val['post_img']); ?>">
 		</div>
+		<?php endif; ?>
 		
 		<div class="post-foot">
+			<!-- 自分の投稿には編集アイコンを表示する -->
+			<?php if($edit_flg){ ?>
+				<a href="post.php?p_id=<?php echo sanitize($dbPostList[$key]['id']); ?>">
+					<i class="fas fa-edit js-post-edit btn-edit"></i>
+				</a>
+			<?php } ?>
 			<div class="btn-comment">
 				<a class="link-nomal" href="comment.php?p_id=<?php echo $val['id']; ?>">
-					<i class="far fa-comment-alt fa-lg px-16"></i><?php echo count($dbPostComment); ?>
+					<i class="far fa-comment-alt fa-lg px-16"></i><?php echo $dbPostCommentNum; ?>
 				</a>
 			</div>
-			<div class="btn-like">
-				<i class="far fa-heart fa-lg like-i px-16"></i><?php echo count($dbPostGood); ?>
+			<div class="btn-good <?php if(isGood($_SESSION['user_id'], $dbPostList[$key]['id'])) echo 'active'; ?>">
+				<!-- 自分がいいねした投稿にはハートのスタイルを常に保持する -->
+				<i class="fa-heart fa-lg px-16
+				<?php
+					if(isGood($_SESSION['user_id'],$dbPostList[$key]['id'])){
+						echo ' active fas';
+					}else{
+						echo ' far';
+					}; ?>"></i><span><?php echo $dbPostGoodNum; ?></span>
 			</div>
 		</div>
 	</div>
 </article>
 <?php
 	endforeach;
+}else{
 ?>
-</article>
+<p style="text-align: center; margin-top: 64px;">まだ投稿はありません</p>
+<?php
+}
+

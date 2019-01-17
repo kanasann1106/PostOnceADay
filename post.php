@@ -23,7 +23,7 @@ $dbFormData = (!empty($p_id)) ? getPost($_SESSION['user_id'], $p_id) : '';
 // 新規投稿画面か編集画面か判別用フラグ
 $edit_flg = (empty($dbFormData)) ? false : true;
 debug('投稿ID：'.$p_id);
-debug(' フォーム用DBデータ：'.print_r($dbFormData,true));
+debug('フォーム用DBデータ：'.print_r($dbFormData,true));
 
 // パラメータ改ざんチェック
 // ------------------------------
@@ -38,14 +38,14 @@ if(!empty($p_id) && empty($dbFormData)){
 $canpost_flg = ''; // 投稿可能フラグ
 $newpost_flg = ''; // 初投稿フラグ
 
-if(!empty(getMyPostList($_SESSION['user_id']))){
+if(!empty(getUserPostList($_SESSION['user_id']))){
 	$newpost_flg = false;
 	// my投稿情報取得
-	$myposts = getMyPostList($_SESSION['user_id']);
-	debug('マイ投稿：'.print_r($myposts,true));
+	$userposts = getUserPostList($_SESSION['user_id']);
+	debug('マイ投稿：'.print_r($userposts,true));
 
 	// 最新の投稿日時
-	$latest_post_date = new DateTime($myposts[0]['created_date']);
+	$latest_post_date = new DateTime($userposts[0]['created_date']);
 	// 最新の投稿日時をunixtimeに変換
 	$unix_latest_date = $latest_post_date->format('U');
 
@@ -57,7 +57,7 @@ if(!empty(getMyPostList($_SESSION['user_id']))){
 	// 次回投稿可能な日時
 	$canpost_date = date('Y/m/d H:i:s',($unix_latest_date + $date_limit));
 
-	debug('最新の投稿日時：'.$myposts[0]['created_date']);
+	debug('最新の投稿日時：'.$userposts[0]['created_date']);
 	debug('次回投稿可能な日時：'.date('Y/m/d H:i:s',($unix_latest_date + $date_limit)));
 }else{
 	$newpost_flg = true;
@@ -65,58 +65,82 @@ if(!empty(getMyPostList($_SESSION['user_id']))){
 	debug('$canpost_flg:'.$canpost_flg);
 }
 
-
-// post送信されていた場合
 if(!empty($_POST)){
 
-	$contents = $_POST['contents'];
-	$post_img = (!empty($_FILES['post_img']['name'])) ? uploadImg($_FILES['post_img'],'post_img') : '';
+	// 投稿送信された場合 
+	if($_POST['submit']){
+		debug('投稿します');
 
-	// 更新の場合はDBの情報と入力情報が異なる場合にバリデーションチェック
-	if(empty($dbFormData)){
-		// 未入力チェック
-		validRequired($contents, 'contents');
-		// 文字数チェック
-		validMaxLen($contents, 'contents');
-	}else{
-		if($dbFormData['contents'] !== $contents){
+		$contents = $_POST['contents'];
+		// 画像をアップロードしパスを格納
+		$post_img = (!empty($_FILES['post_img']['name'])) ? uploadImg($_FILES['post_img'],'post_img') : '';
+		// 画像をpostしなかった場合、既にDBに登録されていたらDBのパスを入れる
+		$post_img = (empty($post_img) && !empty($dbFormData['post_img'])) ? $dbFormData['post_img'] : $post_img;
+
+		// 更新の場合はDBの情報と入力情報が異なる場合にバリデーションチェック
+		if(empty($dbFormData)){
 			// 未入力チェック
 			validRequired($contents, 'contents');
 			// 文字数チェック
 			validMaxLen($contents, 'contents');
+		}else{
+			if($dbFormData['contents'] !== $contents){
+				// 未入力チェック
+				validRequired($contents, 'contents');
+				// 文字数チェック
+				validMaxLen($contents, 'contents');
+			}
 		}
-	}
 
-	if(empty($err_msg)){
-		debug('バリデーションOKです。');
+		if(empty($err_msg)){
+			debug('バリデーションOKです。');
 
+			try{
+				$dbh = dbConnect();
+				
+				if($edit_flg){ // 編集画面の場合
+					debug('DB更新です。');
+					$sql = 'UPDATE post SET contents = :contents, post_img = :post_img WHERE user_id = :u_id AND id = :p_id';
+					$data = array(':contents' => $contents, ':post_img' => $post_img, ':u_id' => $_SESSION['user_id'], ':p_id' => $p_id);
+				}elseif($canpost_flg || $newpost_flg){
+					debug('DB新規登録です。');
+					$sql = 'INSERT INTO post (contents, post_img, user_id, created_date) VALUES (:contents, :post_img, :u_id, :date)';
+					$data = array(':contents' => $contents, ':post_img' => $post_img, ':u_id' => $_SESSION['user_id'], ':date' => date('Y-m-d H:i:s'));
+				}else{
+					header("Location:index.php");
+				}
+				debug('SQL:'.$sql);
+				debug('流し込みデータ：'.print_r($data,true));
+				// クエリ実行
+				$stmt = queryPost($dbh, $sql, $data);
+
+				// クエリ成功の場合
+				if($stmt){
+					$_SESSION['msg_success'] = SUC01;
+					debug('トップページへ遷移します。');
+					header("Location:index.php");
+				}
+			}catch(Exception $e){
+				error_log('エラー発生：'. $e->getMessage());
+				$err_msg['common'] = MSG07;
+			}
+		}
+	}else{
+		debug('投稿を削除します');
+		
 		try{
 			$dbh = dbConnect();
-			
-			if($edit_flg){ // 編集画面の場合
-				debug('DB更新です。');
-				$sql = 'UPDATE post SET contents = :contents, post_img = :post_img WHERE user_id = :u_id AND id = :p_id';
-				$data = array(':contents' => $contents, ':post_img' => $post_img, ':u_id' => $_SESSION['user_id'], ':p_id' => $p_id);
-			}elseif($canpost_flg || $newpost_flg){
-				debug('DB新規登録です。');
-				$sql = 'INSERT INTO post (contents, post_img, user_id, created_date) VALUES (:contents, :post_img, :u_id, :date)';
-				$data = array(':contents' => $contents, ':post_img' => $post_img, ':u_id' => $_SESSION['user_id'], ':date' => date('Y-m-d H:i:s'));
-			}else{
-				header("Location:index.php");
-			}
-			debug('SQL:'.$sql);
-			debug('流し込みデータ：'.print_r($data,true));
+			$sql = 'UPDATE post SET delete_flg = 1 WHERE user_id = :u_id AND id = :p_id';
+			$data = array(':u_id' => $_SESSION['user_id'], ':p_id' => $p_id);
 			// クエリ実行
 			$stmt = queryPost($dbh, $sql, $data);
 
-			// クエリ成功の場合
 			if($stmt){
-				$_SESSION['msg_success'] = SUC01;
-				debug('トップページへ遷移します。');
+				debug('削除しました');
 				header("Location:index.php");
 			}
 		}catch(Exception $e){
-			error_log('エラー発生：'. $e->getMessage());
+			error_log('エラー発生：'.$e->getMessage());
 			$err_msg['common'] = MSG07;
 		}
 	}
@@ -152,8 +176,7 @@ require('head.php');
 					</div>
 					<div class="imgDrop-wrap">
 						<label class="img-area js-area-drop <?php if(!empty($err_msg['post_img'])) echo 'err' ;?>">
-							ここに画像をドラッグ＆ドロップ
-							<!-- <i class="far fa-image fa-6x image-icon"></i> -->
+							<i class="far fa-image fa-5x"></i>
 							<input type="hidden" name="MAX_FILE_SIZE" value="3145728">
 							<input type="file" name="post_img" class="input-file">
 							<img src="<?php echo getFormData('post_img') ;?>" alt="投稿画像" class="prev-img" style="<?php if(empty(getFormData('post_img'))) echo 'display:none;' ?>">
@@ -164,14 +187,14 @@ require('head.php');
 					</div>
 
 					<div class="btn-container" style="text-align: right;">
-						<input type="submit" name="delete" class="px-16 btn-gray btn-mid mr-24" value="削除">
-						<input type="submit" name="submit" class="btn-primary btn-mid" value="送信" <?php if(empty($canpost_flg) && empty($newpost_flg)) echo 'disabled'; ?>>
+						<?php if($edit_flg) echo '<input type="submit" name="delete" class="px-16 btn-gray btn-mid mr-24" value="削除">'; ?>
+						<input type="submit" name="submit" class="btn-primary btn-mid" value="送信" <?php if(empty($canpost_flg) && empty($newpost_flg) && empty($edit_flg)) echo 'disabled'; ?>>
 					</div>
 				</div>
 			</form>
 			<!-- 投稿不可時に表示 -->
 			<?php
-				if(empty($canpost_flg) && empty($newpost_flg)){
+				if(empty($canpost_flg) && empty($newpost_flg) && empty($edit_flg)){
 			?>
 				<div class="nopost-msg">
 					<i class="fas fa-exclamation-triangle">

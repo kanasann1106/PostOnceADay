@@ -88,10 +88,10 @@ debug('画面表示処理終了<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 		</div>
 		<div class="profImgDrop-wrap">
 			<label class="prof-img-area js-area-drop <?php if(!empty($err_msg['user_img'])) echo 'err'; ?>">
-				<i class="far fa-user fa-3x user-icon" style="<?php if(!empty(getFormData('user_img'))) echo 'display: none'; ?>"></i>
+				<i class="far fa-user fa-3x" style="<?php if(!empty(getFormData('user_img'))) echo 'display: none'; ?>"></i>
 				<input type="hidden" name="MAX_FILE_SIZE" value="3145728">
 				<input type="file" name="user_img" class="input-file">
-				<img src="<?php echo getFormData('user_img'); ?>" alt="投稿画像" class="prev-img" style="<?php if(empty(getFormData('user_img'))) echo 'display:none' ?>">
+				<img src="<?php echo getFormData('user_img'); ?>" alt="ユーザー画像" class="prev-img" style="<?php if(empty(getFormData('user_img'))) echo 'display:none' ?>">
 			</label>
 			<div class="err_msg">
 				<?php getErrMsg('prof_img'); ?>

@@ -308,7 +308,31 @@ function getGood($p_id){
 		error_log('エラー発生：'.$e->getMessage());
 	}
 }
-function getMyPostList($u_id){
+function isGood($u_id, $p_id){
+	debug('いいねした情報があるか確認');
+	debug('ユーザーID'.$u_id);
+	debug('投稿ID：'.$p_id);
+
+	try {
+		$dbh = dbConnect();
+		$sql = 'SELECT * FROM good WHERE post_id = :p_id AND user_id = :u_id';
+		$data = array(':u_id' => $u_id, ':p_id' => $p_id);
+		// クエリ実行
+		$stmt = queryPost($dbh, $sql, $data);
+
+		if($stmt->rowCount()){
+			debug('お気に入りです');
+			return true;
+		}else{
+			debug('特に気に入ってません');
+			return false;
+		}
+
+	} catch (Exception $e) {
+		error_log('エラー発生:' . $e->getMessage());
+	}
+}
+function getUserPostList($u_id){
 	debug('My投稿情報を取得します。');
 	try{
 		$dbh = dbConnect();
@@ -326,11 +350,11 @@ function getMyPostList($u_id){
 		error_log('エラー発生：'.$e->getMessage());
 	}
 }
-function getMyGood($u_id){
-	debug(' 自分のいいねを取得します');
+function getUserGoodPostList($u_id){
+	debug(' 自分のいいねした投稿を取得します');
 	try {
 		$dbh = dbConnect();
-		$sql = 'SELECT * FROM good WHERE user_id = :u_id';
+		$sql = 'SELECT p.id, p.contents, p.post_img, p.user_id, p.created_date, p.delete_flg FROM post AS p INNER JOIN good AS g ON p.id = g.post_id WHERE g.user_id = :u_id AND p.delete_flg = 0 ORDER BY created_date DESC';
 		$data = array(':u_id' => $u_id);
 		// クエリ実行
 		$stmt = queryPost($dbh, $sql, $data);

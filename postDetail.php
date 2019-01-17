@@ -17,8 +17,8 @@ $p_id = '';
 $dbPostData = '';
 $dbPostUserInfo = '';
 $dbCommentList = '';
-// いいね数取得
 $dbPostGoodNum = '';
+$edit_flg = '';
 
 // 画像表示用データ取得
 // ------------------------------
@@ -35,8 +35,10 @@ if(!empty($_GET['p_id'])){
 
 	// DBからコメントを取得
 	$dbCommentList = getComment($p_id);
-	// DBからコメントを取得
+	// DBからいいねを取得
 	$dbPostGoodNum = count(getGood($p_id));
+	// 自分の投稿なら編集フラグを立てる
+	$edit_flg = ($dbPostData['user_id'] === $_SESSION['user_id']) ? true : false;
 
 	// パラメータに不正な値が入っているかチェック
 	if(empty($dbPostData)){
@@ -56,25 +58,6 @@ require('head.php');
 ?>
 
 <body>
-	<style>
-		.comment .icon-wrap{
-			width: 64px;
-			height: 64px;
-			background: #bee6cc;
-			border-radius: 50%;
-			-webkit-border-radius: 50%;
-			-moz-border-radius: 50%;
-			position: absolute;
-			top: 4px;
-			overflow: hidden;
-		}
-		.comment .post-wrap{
-			min-height: 48px;
-		}
-		.comment .post-head{
-			padding: 0 0 8px 0;
-		}
-	</style>
 	<!-- ヘッダー -->
 	<?php require('header.php'); ?>
 
@@ -82,7 +65,7 @@ require('head.php');
 	<main>
 		<div class="site-wrap">
 			<!-- 投稿詳細 -->
-			<section class="post">
+			<section class="post" data-postid="<?php echo sanitize($p_id); ?>">
 				<div class="icon-wrap">
 					<a href="userpage.php?u_id=<?php echo sanitize($dbPostUserInfo['id']); ?>">
 						<img class="user-icon" src="<?php echo showImg(sanitize($dbPostUserInfo['user_img'])); ?>">
@@ -96,20 +79,39 @@ require('head.php');
 					<p>
 						<?php echo sanitize($dbPostData['contents']); ?>
 					</p>
+
+					<?php if(!empty($dbPostData['post_img'])): ?>
 					<div class="post-img-wrap">
 						<img class="post-img" src="<?php echo sanitize($dbPostData['post_img']); ?>">
 					</div>
+					<?php endif; ?>
+					
 					<div class="post-foot">
+						<!-- 自分の投稿には編集アイコンを表示する -->
+						<?php if($edit_flg){ ?>
+							<a href="post.php?p_id=<?php echo $p_id; ?>">
+								<i class="fas fa-edit js-post-edit btn-edit"></i>
+							</a>
+						<?php } ?>
 						<div class="btn-comment">
 							<a class="link-nomal" href="comment.php?p_id=<?php echo $dbPostData['id']; ?>">
 								<i class="far fa-comment-alt fa-lg px-16"></i><?php echo count($dbCommentList); ?>
 							</a>
 						</div>
-						<div class="btn-like">
-							<i class="far fa-heart fa-lg like-i px-16"></i><?php echo $dbPostGoodNum ?>
+						<div class="btn-good <?php if(isGood($_SESSION['user_id'], $dbPostData['id'])) echo 'active'; ?>">
+							<!-- 自分がいいねした投稿にはハートのスタイルを常に保持する -->
+							<i class="fa-heart fa-lg px-16
+							<?php
+								if(isGood($_SESSION['user_id'],$dbPostData['id'])){
+									echo ' active fas';
+								}else{
+									echo ' far';
+								}; ?>"></i><span><?php echo $dbPostGoodNum; ?></span>
 						</div>
 					</div>
-					<!-- コメント一覧 -->
+				</div>
+			</section>
+			<!-- コメント一覧 -->
 					<?php
 						foreach ($dbCommentList as $key => $val):
 							$dbCommentUserId = $dbCommentList[$key]['user_id'];
@@ -134,8 +136,6 @@ require('head.php');
 					<?php
 						endforeach;
 					?>
-				</div>
-			</section>
 		</div>
 	</main>
 
