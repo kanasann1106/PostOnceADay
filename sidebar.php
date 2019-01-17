@@ -1,15 +1,7 @@
-<?php
-if(!empty($u_id)){
-	$dbPostUserInfo = getUser($u_id);
-}
-?>
-<div class="prof-icon-wrap">
-	<img class="porf-icon" src="<?php echo showImg(sanitize($dbPostUserInfo['user_img'])); ?>">
-</div>
-<?php if(!empty($dbPostUserInfo['msg'])){ ?>
-<div class="msg"><p><?php echo sanitize($dbPostUserInfo['msg']); ?></p></div>
-<?php } ?>
 <aside class="sideber">
+	<div class="prof-icon-wrap">
+		<img class="porf-icon" src="<?php echo showImg(sanitize($dbPostUserInfo['user_img'])); ?>">
+	</div>
 	<ul class="prof">
 		<li class="username">
 			<?php echo sanitize($dbPostUserInfo['username']); ?>
@@ -31,5 +23,4 @@ if(!empty($u_id)){
 	<?php
 		}
 	?>
-	
 </aside>

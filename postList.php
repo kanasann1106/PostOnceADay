@@ -97,7 +97,15 @@ if(!empty($dbPostList)){
 	endforeach;
 }else{
 ?>
-<p style="text-align: center; margin-top: 64px;">まだ投稿はありません</p>
-<?php
+	<?php
+		if(isset($u_id) && !empty($_GET['good'])){
+	?>
+		<p style="text-align: center; margin-top: 64px;">いいね押してあげてください</p>
+	<?php
+		}else{
+	?>
+		<p style="text-align: center; margin-top: 64px;">まだ投稿はありません</p>
+	<?php
+		}
 }
 

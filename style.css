@@ -442,6 +442,10 @@ i{
 	color: #555;
 	text-decoration: none;
 }
+.post-info a:first-child{
+		margin-right: 24px;
+		margin-left: 32%;
+}
 .post-info a:hover{
 	border-bottom: 1px solid;
 	font-weight: bold;
@@ -457,26 +461,54 @@ i{
 	height: 811px;
 	overflow: scroll;
 }
+.sp-username, .my-menu, .msg{
+	display: none;
+}
 @media screen and (max-width: 700px){
-	.post-info{
-		font-size: 16px;
-		top: 64px;
-	}
 	.mypage-wrap{
-		margin: 40px auto;
+		margin: 16px auto;
 	}
 	.my-contents{
 		width: 100%;
-		margin: 32px auto;
+		margin: 0 auto;
 		overflow: unset;
+	}
+	.post-info{
+		margin-top: 0;
+		font-size: 16px;
+		line-height: 32px;
+	}
+	.post-info a:first-child{
+		margin-left: 0;
+	}
+	.sp-username{
+		display: block;
+		font-size: 22px;
+		margin: 6px 0 0 16px;
+		color: #333;
+		font-weight: bold;
+	}
+	.msg{
+		width: 93%;
+		display: inline-block;
+		margin: 8px;
+		padding: 7px 10px;
+		min-width: 120px;
+		max-width: 100%;
+		color: #555;
+		background: #e8fff0;
+	}
+	.my-menu{
+		display: block;
+		position: absolute;
+		left: 86%;
+		top: 160px;
+		font-size: 32px;
 	}
 }
 /*----------------------------------
 	サイドバー
 -----------------------------------*/
-.msg{
-	display: none;
-}
 .sideber{
 	position: relative;
 	width: 30%;
@@ -529,43 +561,14 @@ i{
 }
 @media screen and (max-width: 700px){
 	.prof-icon-wrap{
-	width: 100px;
-	height: 100px;
-	top: -132px;
-	left: -14px;
+		width: 100px;
+		height: 100px;
+		position: static;
 	}
 	.sideber{
 		display: none;
 	}
-	/*メッセージ吹き出し*/
-	.msg{
-		position: absolute;
-		top: -120px;
-    left: 100px;
-		display: inline-block;
-		margin: 1.5em 0 1.5em 15px;
-		padding: 7px 10px;
-		min-width: 120px;
-		max-width: 100%;
-		color: #555;
-		font-size: 16px;
-		background: #e0edff;
-	}
 
-	.msg:before{
-		content: "";
-		position: absolute;
-		top: 50%;
-		left: -30px;
-	 	margin-top: -15px;
-		border: 15px solid transparent;
-		border-right: 15px solid #e0edff;
-	}
-
-	.msg p {
-		margin: 0;
-		padding: 0;
-	}
 }
 /*----------------------------------
 	ポップアップ
