@@ -12,6 +12,9 @@ h1,h2,h3,h4,h5,h6,p{
 ul{
 	padding-left: 0;
 }
+li{
+	list-style-type: none;
+}
 /*----------------------------------
 	リンク
 -----------------------------------*/
@@ -59,14 +62,6 @@ header h1 a{
 header h1 a:hover{
 	opacity: 0.7;
 }
-@media screen and (max-width: 700px){
-	header span{
-		display: none;
-	}
-	#top-nav a{
-		width: 56px;
-	}
-}
 #top-nav ul{
 	display: flex;
 	justify-content: flex-end;
@@ -91,8 +86,15 @@ header h1 a:hover{
 	text-align: center;
 }
 @media screen and (max-width: 700px){
+	header h1{
+		padding-left: 8px;
+	}
+	header span{
+		display: none;
+	}
 	#top-nav a{
 		width: 48px;
+		font-size: 12px;
 	}
 }
 /*----------------------------------
@@ -104,8 +106,8 @@ main{
 .site-wrap{
 	max-width: 720px;
 	margin: 0 auto;
-	position: relative;
 }
+
 .mt-16{
 	margin-top: 16px; 
 }
@@ -208,6 +210,7 @@ main{
 	color: #aaa;
 	position: absolute;
 	right: 32px;
+	top: 26px;
 	font-size: 12px;
 }
 @media screen and (max-width: 450px){
@@ -217,6 +220,9 @@ main{
 }
 .post-wrap{
 	margin-left: 88px;
+}
+.post-wrap p{
+	margin-top : 16px;
 }
 .post-foot{
 	text-align: right;
@@ -340,7 +346,7 @@ input[type="submit"]:hover{
 }
 .msg-container{
 	margin: 0 auto;
-	width: 400px;
+	width: 100%;
 	margin-top: 10px;
 }
 .counter-text{
@@ -415,7 +421,7 @@ input[type="submit"]:hover{
 	color: #aaa;
 	background: #f6f5f5;
 	border: 1px solid #ccc;
-	width: 32%;
+	width: 120px;
 	height: 120px;
 	padding: 4px;
 	margin: 0 auto;
@@ -426,6 +432,9 @@ input[type="submit"]:hover{
 }
 i{
 	text-align: center;
+}
+@media screen and (max-width: 530px){
+
 }
 /*----------------------------------
 	マイページ
@@ -460,18 +469,10 @@ i{
 	height: 811px;
 	overflow: scroll;
 }
-.sp-username, .my-menu, .msg{
+.sp-prof-info{
 	display: none;
 }
 @media screen and (max-width: 700px){
-	.mypage-wrap{
-		margin: 16px auto;
-	}
-	.my-contents{
-		width: 100%;
-		margin: 0 auto;
-		overflow: unset;
-	}
 	.post-info{
 		margin-top: 0;
 		font-size: 16px;
@@ -480,14 +481,25 @@ i{
 	.post-info a:first-child{
 		margin-left: 0;
 	}
-	.sp-username{
+	.mypage-wrap{
+		margin: 16px auto;
+		width: 100%;
+	}
+	.my-contents{
+		width: 100%;
+		margin: 0 auto;
+		overflow: unset;
+	}
+	.sp-prof-info{
 		display: block;
+	}
+	.sp-username{
 		font-size: 22px;
 		margin: 6px 0 0 16px;
 		color: #333;
 		font-weight: bold;
 	}
-	.msg{
+	.sp-user-msg{
 		width: 93%;
 		display: inline-block;
 		margin: 8px;
@@ -496,13 +508,46 @@ i{
 		max-width: 100%;
 		color: #555;
 		background: #e8fff0;
+		word-wrap: break-word;
+		box-sizing: border-box;
 	}
-	.my-menu{
-		display: block;
+	/*spサイズ時のマイメニュー*/
+	.sp-menu-btn{
 		position: absolute;
-		left: 86%;
-		top: 160px;
+		left: 30%;
+		top: 161px;
 		font-size: 32px;
+	}
+	.sp-menu{
+		font-size: 14px;
+		text-align: left;
+		border: 3px solid #4bd07a;
+		position: fixed;
+		display: flex;
+		flex-direction: column;
+		top: 74px;
+		margin: 0;
+		right: -240px;
+		line-height: 37px;
+		width: 150px;
+		padding: 0 12px;
+		z-index: 1;
+		background: #fff;
+	}
+	.right-slide{
+		right: 0;
+	}
+	.sp-menu a{
+		display: block;
+		margin: 15px auto;
+		padding: 0px 16px;
+		border: 1px solid #4bd07a;
+		color: #4bd07a;
+		text-decoration: none;
+	}
+	.sp-menu a:hover{
+		color: #fff;
+		background: #4bd07a;
 	}
 }
 /*----------------------------------
@@ -530,7 +575,7 @@ i{
 	-moz-border-radius: 50%;
 	position: absolute;
 	top: -126px;
-	left: 8%;
+	left: 20%;
 	z-index: 3;
 	overflow: hidden;
 }
@@ -538,6 +583,9 @@ i{
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+}
+.user-msg{
+	word-wrap: break-word
 }
 .menu{
 	text-align: center;
@@ -567,7 +615,6 @@ i{
 	.sideber{
 		display: none;
 	}
-
 }
 /*----------------------------------
 	ポップアップ

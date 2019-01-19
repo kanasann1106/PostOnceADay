@@ -14,11 +14,11 @@
 		if(!empty($_SESSION['user_id']) && $u_id == $_SESSION['user_id']){
 	?>
 		<!-- マイメニュー -->
-		<ul id="js-mymenulist" class="menu">
-			<a href="logout.php">ログアウト</a>
-			<a href="userpage.php?u_id=<?php echo $_SESSION['user_id'] ?>&menu=passEdit">パスワード変更</a>
-			<a href="userpage.php?u_id=<?php echo $_SESSION['user_id'] ?>&menu=profEdit">プロフィール編集</a>
-			<a href="userpage.php?u_id=<?php echo $_SESSION['user_id'] ?>&menu=withdraw">退会</a>
+		<ul class="menu">
+			<li><a href="userpage.php?u_id=<?php echo $_SESSION['user_id'] ?>&menu=profEdit">プロフィール編集</a></li>
+			<li><a href="logout.php">ログアウト</a></li>
+			<li><a href="userpage.php?u_id=<?php echo $_SESSION['user_id'] ?>&menu=passEdit">パスワード変更</a></li>
+			<li><a href="userpage.php?u_id=<?php echo $_SESSION['user_id'] ?>&menu=withdraw">退会</a></li>
 		</ul>
 	<?php
 		}

@@ -94,7 +94,7 @@ debug('画面表示処理終了<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 				<img src="<?php echo getFormData('user_img'); ?>" alt="ユーザー画像" class="prev-img" style="<?php if(empty(getFormData('user_img'))) echo 'display:none' ?>">
 			</label>
 			<div class="err_msg">
-				<?php getErrMsg('prof_img'); ?>
+				<?php getErrMsg('user_img'); ?>
 			</div>
 		</div>
 		<label class="<?php if(!empty($err_msg['username'])) echo 'err'; ?>">

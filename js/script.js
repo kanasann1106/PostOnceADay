@@ -70,4 +70,12 @@ $(function(){
 				console.log('Ajax Error');
 			});
 		});
+
+	// スマホ画面のスライドメニュー
+	var $menu_btn = $('.js-menu-slide'),
+			$menulist = $('#js-menulist');
+
+	$menu_btn.on('click', function(){
+		$menulist.toggleClass('right-slide');
+	});
 });

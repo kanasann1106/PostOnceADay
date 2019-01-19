@@ -7,7 +7,7 @@
 				if(empty($_SESSION['user_id'])){
 			?>	<!-- 未ログイン -->
 					<li><a href="login.php">ログイン</a></li>
-					<li><a class="btn-primary" href="signup.php">ユーザー登録</a></li>
+					<li><a class="btn-primary" href="signup.php">登録</a></li>
 			<?php
 				}else{
 			?>	<!-- ログイン済み -->
