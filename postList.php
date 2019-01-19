@@ -100,7 +100,7 @@ if(!empty($dbPostList)){
 	<?php
 		if(isset($u_id) && !empty($_GET['good'])){
 	?>
-		<p style="text-align: center; margin-top: 64px;">いいね押してあげてください</p>
+		<p style="text-align: center; margin-top: 64px;">いいねがありません</p>
 	<?php
 		}else{
 	?>
