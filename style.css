@@ -106,6 +106,7 @@ main{
 .site-wrap{
 	max-width: 720px;
 	margin: 0 auto;
+	position: relative;
 }
 
 .mt-16{
@@ -148,6 +149,11 @@ main{
 }
 .btn-mid{
 	max-width: 120px;
+}
+@media screen and (max-width: 700px){
+	.btn-mid{
+		max-width: 90px;
+	}
 }
 /*----------------------------------
 	投稿
@@ -394,13 +400,12 @@ input[type="submit"]:hover{
 }
 /*投稿禁止のメッセージ*/
 .nopost-msg{
-	width: 580px;
+	width: 100%;
 	height: 680px;
 	margin: 0 auto;
 	background-color: #ffffffd6;
 	position: absolute;
 	top: 0;
-	left: 70px;
 	font-size: 21px;
 	font-weight: bold;
 	text-align: center;

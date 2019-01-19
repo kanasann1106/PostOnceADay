@@ -199,7 +199,7 @@ require('head.php');
 				<div class="nopost-msg">
 					<i class="fas fa-exclamation-triangle">
 						1日1投稿です！<br>
-						<?php echo $canpost_date; ?>以降に投稿ができます。
+						<?php echo $canpost_date; ?>以降<br>投稿ができます。
 					</i>
 					
 				</div>
