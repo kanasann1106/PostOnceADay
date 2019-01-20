@@ -80,6 +80,9 @@ if(!empty($dbPostList)){
 					<i class="far fa-comment-alt fa-lg px-16"></i><?php echo $dbPostCommentNum; ?>
 				</a>
 			</div>
+			<!-- $login_flgをscript.jsに渡すための記述 -->
+			<?php $login_flg = !empty($_SESSION['user_id']); ?>
+			<script>var login_flg = "<?php echo $login_flg ?>"</script>
 			<div class="btn-good <?php if(isGood($_SESSION['user_id'], $dbPostList[$key]['id'])) echo 'active'; ?>">
 				<!-- 自分がいいねした投稿にはハートのスタイルを常に保持する -->
 				<i class="fa-heart fa-lg px-16

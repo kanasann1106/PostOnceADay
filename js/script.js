@@ -1,5 +1,4 @@
 $(function(){
-
 	// 投稿一覧から投稿詳細ページへ遷移
 	var $post = $('.js-post-click') || null;
 	if($post !== null){
@@ -42,33 +41,37 @@ $(function(){
 
 		fileReader.readAsDataURL(file);
 	});
-
 	// いいね機能
 	var $good = $('.btn-good'), //詳細のいいね!ボタン
 			goodPostId;
 
 	$good.on('click',function(e){
-		e.stopPropagation();
-		var $this = $(this);
-		goodPostId = $this.parents('.post').data('postid'); //投稿ID取得
-		$.ajax({
-			type: 'POST',
-			url: 'ajaxGood.php',
-			data: { postId: goodPostId}
-		 }).done(function(data){
-		 		console.log('Ajax Success');
+		if(login_flg){
+			e.stopPropagation();
+			var $this = $(this);
+			goodPostId = $this.parents('.post').data('postid'); //投稿ID取得
+			$.ajax({
+				type: 'POST',
+				url: 'ajaxGood.php',
+				data: { postId: goodPostId}
+			 }).done(function(data){
+			 		console.log('Ajax Success');
 
-		 		// いいねの総数を表示
-				$this.children('span').html(data);
-				// いいね取り消しのスタイル
-				$this.children('i').toggleClass('far'); //空洞ハート
-				// いいね押した時のスタイル
-				$this.children('i').toggleClass('fas'); //塗りつぶしハート
-				$this.children('i').toggleClass('active');
-				$this.toggleClass('active');
-			}).fail(function(msg) {
-				console.log('Ajax Error');
-			});
+			 		// いいねの総数を表示
+					$this.children('span').html(data);
+					// いいね取り消しのスタイル
+					$this.children('i').toggleClass('far'); //空洞ハート
+					// いいね押した時のスタイル
+					$this.children('i').toggleClass('fas'); //塗りつぶしハート
+					$this.children('i').toggleClass('active');
+					$this.toggleClass('active');
+				}).fail(function(msg) {
+					console.log('Ajax Error');
+				});
+			}else{
+				window.location.href = 'index.php';
+			}
+		
 		});
 
 	// スマホ画面のスライドメニュー

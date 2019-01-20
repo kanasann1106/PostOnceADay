@@ -59,10 +59,14 @@ define('MSG08', 'ユーザー名またはパスワードが違います');
 define('MSG09', 'そのEmailは既に登録されています');
 define('MSG10', '現在のパスワードが間違っています');
 define('MSG11', '現在のパスワードと同じです');
+define('MSG12', '文字で入力してください');
+define('MSG13', '正しくありません');
+define('MSG14', '有効期限が切れています');
 // 成功時メッセージ
 define('SUC01', '登録しました');
 define('SUC02', 'プロフィールを変更しました');
 define('SUC03', 'パスワードを変更しました');
+define('SUC04', 'メールを送信しました');
 
 /*-------------------------------
 	グローバル変数
@@ -135,6 +139,13 @@ function validMatch($str1, $str2, $key){
 	if($str1 !== $str2){
 		global $err_msg;
 		$err_msg[$key] = MSG03;
+	}
+}
+// 固定長チェック
+function validLength($str, $key, $len = 8){
+	if(mb_strlen($str) !== $len){
+		global $err_msg;
+		$err_msg[$key] = $len . MSG12;
 	}
 }
 // パスワードチェック
@@ -368,6 +379,25 @@ function getUserGoodPostList($u_id){
 		error_log('エラー発生：'.$e->getMessage());
 	}
 }
+//================================
+// メール送信
+//================================
+function sendMail($to, $subject, $comment){
+	if(!empty($to) && !empty($subject) && !empty($comment)){
+		// 文字化けしないように設定（お決まりパターン）
+		mb_language("Japanese");
+		mb_internal_encoding("UTF-8");
+
+		// メールを送信（送信結果はtrueかfalseで返ってくる）
+		$result = mb_send_mail($to, $subject, $comment);
+		// 送信結果を判定
+		if($result){
+			debug('メールを送信しました。');
+		}else{
+			debug('【エラー発生】メールの送信に失敗しました。');
+		}
+	}
+}
 /*-------------------------------
 	その他
 -------------------------------*/
@@ -408,6 +438,16 @@ function getFormData($str, $flg = false){
 		}
 	}
 }
+// 認証キーの生成
+function makeRandKey($length = 8){
+	static $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJLKMNOPQRSTUVWXYZ0123456789';
+	$str = '';
+	for($i = 0; $i < $length; ++$i){
+		$str .= $chars[mt_rand(0, 61)];
+	}
+	return $str;
+}
+// 画像処理
 function uploadImg($file, $key){
 	debug('画像アップロード処理開始');
 	debug('FILE情報：'.print_r($file,true));
