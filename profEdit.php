@@ -113,8 +113,9 @@ debug('画面表示処理終了<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 		</div>
 		<label class="<?php if(!empty($err_msg['msg'])) echo 'err'; ?>">
 			メッセージ
-			<textarea name="msg" rows="9"><?php echo getFormData('msg'); ?></textarea>
+			<textarea id="js-countup" name="msg" rows="9"><?php echo getFormData('msg'); ?></textarea>
 		</label>
+		<p class="counter-text"><span id="js-countup-view">0</span>/100</p>
 		<div class="err_msg">
 			<?php getErrMsg('msg'); ?>
 		</div>
