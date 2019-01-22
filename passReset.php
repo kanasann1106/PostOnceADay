@@ -68,7 +68,7 @@ if(!empty($_POST)){
 							debug('クエリ成功');
 
 							// メールを送信
-							$from = 'POADカスタマーセンター';
+							$from = 'test@email.com';
 							$to = $_SESSION['auth_email'];
 							$subject = '【パスワード再発行完了】｜PostOnceADay';
 							$comment = <<<EOT
