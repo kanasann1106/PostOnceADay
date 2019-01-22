@@ -39,7 +39,7 @@ POADは1日1投稿と制限を設けた掲示板アプリである。
 * MySQL
 
 ### 使用ツール・ライブラリ
-* Jquery
+* jQuery
 * Sublime Text
 * MAMP
 * Google Fonts
