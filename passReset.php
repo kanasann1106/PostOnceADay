@@ -75,7 +75,7 @@ if(!empty($_POST)){
 本メールアドレス宛にパスワードが再設定されたことをお知らせするメールを送信しています。
 下記のURLにて再設定したパスワードをご入力頂き、ログインください。
 
-ログインページ：http://localhost:8888/PostedOnceADay/login.php
+ログインページ：https://poad.kanasann.com/login.php
 
 ////////////////////////////////////////
 POADカスタマーセンター
