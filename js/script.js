@@ -42,7 +42,7 @@ $(function(){
 		fileReader.readAsDataURL(file);
 	});
 	// いいね機能
-	var $good = $('.btn-good'), //詳細のいいね!ボタン
+	var $good = $('.btn-good'),
 			goodPostId;
 
 	$good.on('click',function(e){
