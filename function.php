@@ -379,17 +379,17 @@ function getUserGoodPostList($u_id){
 		error_log('エラー発生：'.$e->getMessage());
 	}
 }
-//================================
-// メール送信
-//================================
-function sendMail($to, $subject, $comment){
+/*-------------------------------
+	メール送信
+-------------------------------*/
+function sendMail($from, $to, $subject, $comment){
 	if(!empty($to) && !empty($subject) && !empty($comment)){
 		// 文字化けしないように設定（お決まりパターン）
 		mb_language("Japanese");
 		mb_internal_encoding("UTF-8");
 
 		// メールを送信（送信結果はtrueかfalseで返ってくる）
-		$result = mb_send_mail($to, $subject, $comment);
+		$result = mb_send_mail($to, $subject, $comment, "From: ".$from);
 		// 送信結果を判定
 		if($result){
 			debug('メールを送信しました。');
