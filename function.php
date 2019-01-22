@@ -389,7 +389,7 @@ function sendMail($from, $to, $subject, $comment){
 		mb_internal_encoding("UTF-8");
 
 		// メールを送信（送信結果はtrueかfalseで返ってくる）
-		$result = mb_send_mail($to, $subject, $comment, "From: ".$from);
+		$result = mb_send_mail($to, $subject, $comment, "From:".mb_encode_mimeheader("POAD")."<".$from.">");
 		// 送信結果を判定
 		if($result){
 			debug('メールを送信しました。');
