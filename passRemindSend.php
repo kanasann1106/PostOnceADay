@@ -45,7 +45,7 @@ if(!empty($_POST)){
 					$auth_key = makeRandKey(); // 認証キー生成
 
 					// メール送信
-					$from = 'POADカスタマーセンター';
+					$from = 'test@email.com';
 					$to = $email;
 					$subject = '【パスワード再発行認証】｜PostOnceADay';
 					$comment = <<<EOT
