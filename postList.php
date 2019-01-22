@@ -85,10 +85,13 @@ if(!empty($dbPostList)){
 			<script>var login_flg = "<?php echo $login_flg ?>"</script>
 			<div class="btn-good <?php if(isGood(isset($_SESSION['user_id']), $dbPostList[$key]['id'])) echo 'active'; ?>">
 				<!-- 自分がいいねした投稿にはハートのスタイルを常に保持する -->
-				<i class="fa-heart fa-lg px-16
 				<?php
-					if(isGood(isset($_SESSION['user_id']),$dbPostList[$key]['id'])){
-						echo ' active fas';
+					if(!empty($_SESSION['user_id'])){
+						if(isGood($_SESSION['user_id'],$dbPostList[$key]['id'])){
+							echo ' active fas';
+						}else{
+							echo ' far';
+						}
 					}else{
 						echo ' far';
 					}; ?>"></i><span><?php echo $dbPostGoodNum; ?></span>
