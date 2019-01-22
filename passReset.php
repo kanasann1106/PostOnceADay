@@ -78,9 +78,8 @@ if(!empty($_POST)){
 ログインページ：http://localhost:8888/PostedOnceADay/login.php
 
 ////////////////////////////////////////
-POADカスタマーセンターカスタマーセンター
-URL  http://yonaguni-media.com/
-E-mail info@webukatu.com
+POADカスタマーセンター
+URL  https://poad.kanasann.com/
 ////////////////////////////////////////
 EOT;
 							sendMail($from, $to, $subject, $comment);
