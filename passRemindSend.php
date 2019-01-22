@@ -61,8 +61,7 @@ http://localhost:8888/PostedOnceADay/passRemindSend.php
 
 ////////////////////////////////////////
 POADカスタマーセンター
-URL  http://yonaguni-media.com/
-E-mail info@webukatu.com
+URL  https://poad.kanasann.com/
 ////////////////////////////////////////
 EOT;
 					sendMail($from, $to, $subject, $comment);
