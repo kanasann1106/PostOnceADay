@@ -52,12 +52,12 @@ if(!empty($_POST)){
 本メールアドレス宛にパスワード再発行のご依頼がありました。
 下記のURLにて認証キーと新しくパスワードを入力してパスワードの再設定をしてください。
 
-パスワード再発行認証キー入力ページ:http://localhost:8888/PostedOnceADay/passReset.php
+パスワード再発行認証キー入力ページ:https://poad.kanasann.com/passReset.php
 認証キー：{$auth_key}
 ※認証キーの有効期限は30分となります
 
 認証キーを再発行されたい場合は下記ページより再度再発行をお願いします。
-http://localhost:8888/PostedOnceADay/passRemindSend.php
+https://poad.kanasann.com/passRemindSend.php
 
 ////////////////////////////////////////
 POADカスタマーセンター
