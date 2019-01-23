@@ -1,5 +1,5 @@
 <footer>
-	Copyright <a href="index.php">PostedOnceADay</a>.
+	Copyright <a href="index.php">PostOnceADay</a>.
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

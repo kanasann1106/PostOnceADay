@@ -170,7 +170,7 @@ function getErrMsg($key){
 // DB接続関数
 function dbConnect(){
 	// DBへの接続準備
-	$dsn = 'mysql:dbname=PostedOnceADay;host=localhost;charset=utf8';
+	$dsn = 'mysql:dbname=PostOnceADay;host=localhost;charset=utf8';
 	$user = 'root';
 	$password = 'root';
 	$options = array(

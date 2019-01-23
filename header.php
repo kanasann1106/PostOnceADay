@@ -1,5 +1,5 @@
 <header>
-	<h1><a href="index.php">POAD<span> -PostedOnceADay-</span></a></h1>
+	<h1><a href="index.php">POAD<span> -PostOnceADay-</span></a></h1>
 	<nav id="top-nav">
 		<ul>
 			

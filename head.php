@@ -4,11 +4,11 @@
 	<meta charset="utf-8">
 	<title><?php echo $siteTitle; ?>｜POAD</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<meta name="description" content="1日の出来事を濃縮した特別な投稿をみんなにシェアしてみませんか？POADはPostedOnceADay「1日に1回しか投稿できない」掲示板サービスです。">
+	<meta name="description" content="1日の出来事を濃縮した特別な投稿をみんなにシェアしてみませんか？POADはPostOnceADay「1日に1回しか投稿できない」掲示板サービスです。">
 	<meta property="og:site_name" content="POAD" />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="<?php echo $siteTitle; ?>">
-	<meta property="og:description" content="1日1回の特別な投稿をみんなにシェアしてみませんか？POADはPostedOnceADay「1日に1回しか投稿できない」掲示板サービスです。">
+	<meta property="og:description" content="1日1回の特別な投稿をみんなにシェアしてみませんか？POADはPostOnceADay「1日に1回しか投稿できない」掲示板サービスです。">
 	<meta property="og:url" content="https://poad.kanasann.com">
 	<meta property="og:image" content="https://kanasann.com/poad/images/poad_img.png">
 	<meta name="twitter:card" content="Summary Card">

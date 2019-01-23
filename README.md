@@ -1,6 +1,6 @@
-PostedOnceADay(POAD)
+PostOnceADay(POAD)
 ====================
-「PostedOnceADay」名前のとおり1日1投稿しかできない掲示板Webアプリ。  
+「PostOnceADay」名前のとおり1日1投稿しかできない掲示板Webアプリ。  
 POADへのリンクは<a href="https://poad.kanasann.com">こちらから</a>
 
 ## Description
