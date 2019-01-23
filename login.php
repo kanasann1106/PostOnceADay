@@ -94,7 +94,7 @@ require('head.php');
 		<div class="site-wrap">
 			<!-- ログインフォーム -->
 			<form action="" method="post" class="form">
-				<h2>PORTFOLIOにログイン</h2>
+				<h2>POADにログイン</h2>
 				<div class="form-wrap">
 					<div class="err_msg">
 						<?php getErrMsg('common'); ?>
