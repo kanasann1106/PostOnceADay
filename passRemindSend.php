@@ -47,7 +47,7 @@ if(!empty($_POST)){
 					// メール送信
 					$from = 'test@email.com';
 					$to = $email;
-					$subject = '【パスワード再発行認証】｜PostOnceADay';
+					$subject = '【パスワード再発行認証】｜PostedOnceADay';
 					$comment = <<<EOT
 本メールアドレス宛にパスワード再発行のご依頼がありました。
 下記のURLにて認証キーと新しくパスワードを入力してパスワードの再設定をしてください。

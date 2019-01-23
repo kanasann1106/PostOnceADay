@@ -70,7 +70,7 @@ if(!empty($_POST)){
 							// メールを送信
 							$from = 'test@email.com';
 							$to = $_SESSION['auth_email'];
-							$subject = '【パスワード再発行完了】｜PostOnceADay';
+							$subject = '【パスワード再発行完了】｜PostedOnceADay';
 							$comment = <<<EOT
 本メールアドレス宛にパスワードが再設定されたことをお知らせするメールを送信しています。
 下記のURLにて再設定したパスワードをご入力頂き、ログインください。

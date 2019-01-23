@@ -9,7 +9,7 @@ debug('「「「「「「「「「「「「「「「「「「「「「「「「�
 debugLogStart();
 ?>
 <?php
-$siteTitle = 'PostOnceADay';
+$siteTitle = 'PostedOnceADay';
 require('head.php');
 ?>
 <body>
