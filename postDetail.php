@@ -77,7 +77,7 @@ require('head.php');
 						<time><?php echo date('Y/m/d H:i:s',strtotime(sanitize($dbPostData['created_date']))); ?></time>
 					</div>
 					<p>
-						<?php echo sanitize($dbPostData['contents']); ?>
+						<?php echo nl2br(sanitize($dbPostData['contents'])); ?>
 					</p>
 
 					<?php if(!empty($dbPostData['post_img'])): ?>
@@ -132,7 +132,7 @@ require('head.php');
 								<time><?php echo date('Y/m/d H:i:s',strtotime(sanitize($val['created_date']))); ?></time>
 							</div>
 							<p>
-								<?php echo sanitize($val['comment']); ?>
+								<?php echo nl2br(sanitize($val['comment'])); ?>
 							</p>
 						</div>
 					</section>

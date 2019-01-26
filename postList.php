@@ -60,7 +60,7 @@ if(!empty($dbPostList)){
 			<time><?php echo date('Y/m/d H:i:s',strtotime(sanitize($val['created_date']))); ?></time>
 		</div>
 		<p>
-			<?php echo $val['contents']; ?>
+			<?php echo nl2br(sanitize($val['contents'])); ?>
 		</p>
 		<?php if(!empty($val['post_img'])): ?>
 		<div class="post-img-wrap">
