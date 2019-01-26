@@ -27,7 +27,7 @@ if(!empty($_GET['u_id']) && !empty(getUser($u_id))){
 }
 ?>
 <?php
-$siteTitle = (!empty($_SESSION['user_id'])) ? 'マイページ' : 'ユーザーページ';
+$siteTitle = ($_SESSION['user_id']=== $u_id) ? 'マイページ' : 'ユーザーページ';
 require('head.php');
 ?>
 

@@ -7,7 +7,7 @@
 			<?php echo sanitize($dbPostUserInfo['username']); ?>
 		</li>
 		<li class="user-msg px-8 mt-16">
-			<?php echo nl2br(sanitize($dbPostUserInfo['msg'])); ?>
+			<?php echo sanitize($dbPostUserInfo['msg']); ?>
 		</li>
 	</ul>
 	<?php
