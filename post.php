@@ -127,7 +127,7 @@ if(!empty($_POST)){
 		}
 	}else{
 		debug('投稿を削除します');
-		
+
 		try{
 			$dbh = dbConnect();
 			$sql = 'UPDATE post SET delete_flg = 1 WHERE user_id = :u_id AND id = :p_id';
@@ -137,6 +137,7 @@ if(!empty($_POST)){
 
 			if($stmt){
 				debug('削除しました');
+				$_SESSION['msg_success'] = SUC05;
 				header("Location:index.php");
 			}
 		}catch(Exception $e){

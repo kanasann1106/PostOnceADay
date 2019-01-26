@@ -86,7 +86,8 @@ EOT;
 
 							// センション削除
 							session_unset();
-							$_SESSION['msg_success'] = SUC04;
+
+							$_SESSION['msg_success'] = SUC06;
 							debug('セッションの中身：'.print_r($_SESSION,true));
 
 							header("Location:login.php"); //ログインページへ
@@ -114,6 +115,9 @@ require('head.php');
 	<!-- ヘッダー -->
 	<?php require('header.php'); ?>
 
+	<p id="js-show-msg" style="display: none; position: relative; top: 56px;" class="msg-slide">
+		<?php echo getSessionFlash('msg_success'); ?>
+	</p>
 	<!-- メインコンテンツ -->
 	<main>
 		<div class="site-wrap">

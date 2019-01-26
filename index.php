@@ -19,6 +19,9 @@ require('head.php');
 	<!-- メインコンテンツ -->
 	<main>
 		<section class="site-wrap">
+			<p id="js-show-msg" style="display: none;" class="msg-slide">
+				<?php echo getSessionFlash('msg_success'); ?>
+			</p>
 			<!-- 投稿一覧 -->
 			<?php require('postList.php'); ?>
 		</section>

@@ -89,6 +89,9 @@ require('head.php');
 	<!-- ヘッダー -->
 	<?php require('header.php'); ?>
 
+	<p id="js-show-msg" style="display: none; position: relative; top: 56px;" class="msg-slide">
+		<?php echo getSessionFlash('msg_success'); ?>
+	</p>
 	<!-- メインコンテンツ -->
 	<main>
 		<div class="site-wrap">

@@ -9,13 +9,11 @@ $(function(){
 	}else{
 		window.location.href = 'index.php';
 	}
-	
 	// 文字数カウンター
 	$('#js-countup').on('keyup', function(e){
 		var count = $(this).val().replace(/\n/g, '').length; //改行は文字数に含めない
 		$('#js-countup-view').html(count);
 	});
-
 	// 画像ライブプレビュー
 	var $dropArea = $('.js-area-drop');
 	var $fileInput = $('.input-file');
@@ -41,6 +39,15 @@ $(function(){
 
 		fileReader.readAsDataURL(file);
 	});
+	// 一時的に通知を表示
+	var $jsShowMsg = $('#js-show-msg');
+	var msg = $jsShowMsg.text();
+	if(msg.replace(/^[\s　]+|[\s　]+$/g, "").length){
+		$jsShowMsg.slideToggle('slow');
+		setTimeout(function(){
+			$jsShowMsg.slideToggle('slow');
+		}, 2000);
+	}
 	// いいね機能
 	var $good = $('.btn-good'),
 			goodPostId;
@@ -73,7 +80,6 @@ $(function(){
 			}
 		
 		});
-
 	// スマホ画面のスライドメニュー
 	var $menu_btn = $('.js-menu-slide'),
 			$menulist = $('#js-menulist');

@@ -63,10 +63,12 @@ define('MSG12', '文字で入力してください');
 define('MSG13', '正しくありません');
 define('MSG14', '有効期限が切れています');
 // 成功時メッセージ
-define('SUC01', '登録しました');
+define('SUC01', '投稿しました');
 define('SUC02', 'プロフィールを変更しました');
 define('SUC03', 'パスワードを変更しました');
-define('SUC04', 'メールを送信しました');
+define('SUC04', 'メールを送信しました、ご確認ください');
+define('SUC05', '削除しました');
+define('SUC06', '新しいパスワードでログインしてください');
 
 /*-------------------------------
 	グローバル変数
@@ -495,5 +497,13 @@ function showImg($path){
 		return 'images/user-icon.png';
 	}else{
 		return $path;
+	}
+}
+// sessionを1回だけ取得
+function getSessionFlash($key){
+	if(!empty($_SESSION[$key])){
+		$data = $_SESSION[$key];
+		$_SESSION[$key] = '';
+		return $data;
 	}
 }

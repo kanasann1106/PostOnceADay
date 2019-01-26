@@ -70,6 +70,9 @@ require('head.php');
 			<?php require('sidebar.php'); ?>
 
 			<section class="my-contents">
+				<p id="js-show-msg" style="display: none;" class="msg-slide">
+					<?php echo getSessionFlash('msg_success'); ?>
+				</p>
 				<?php 
 					if(empty($_GET['menu'])){
 						//投稿一覧
