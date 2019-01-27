@@ -17,12 +17,8 @@ $edit_flg = '';
 /*---------------------------
 	投稿一覧の表示処理
 ----------------------------*/
-
-
-global $dbPostList;
-
 if(isset($u_id)){
-  if(empty($_GET['good'])) {
+  if(empty($_GET['good'])){
     // DBからユーザーIDと一致した投稿情報を取得
     debug('ユーザーの投稿を取得');
     $dbPostList = getUserPostList($u_id);
