@@ -18,22 +18,25 @@ $edit_flg = '';
 	投稿一覧の表示処理
 ----------------------------*/
 
-if(isset($u_id) && !empty($_GET['good'])){
-	// いいねした投稿を取得
-	debug('ユーザーのいいねした投稿を取得');
-	global $dbPostList;
-	$dbPostList = getUserGoodPostList($u_id);
-}elseif(isset($u_id)){
-	// DBからユーザーIDと一致した投稿情報を取得
-	debug('ユーザーの投稿を取得');
-	global $dbPostList;
-	$dbPostList = getUserPostList($u_id);
+
+global $dbPostList;
+
+if(isset($u_id)){
+  if(empty($_GET['good'])) {
+    // DBからユーザーIDと一致した投稿情報を取得
+    debug('ユーザーの投稿を取得');
+    $dbPostList = getUserPostList($u_id);
+  }else{
+    // いいねした投稿を取得
+    debug('ユーザーのいいねした投稿を取得');
+    $dbPostList = getUserGoodPostList($u_id);
+  }
 }else{
-	// DBから全ての投稿情報を取得
-	debug('全ての投稿を取得');
-	global $dbPostList;
-	$dbPostList = getPostList();
+  // DBから全ての投稿情報を取得
+  debug('全ての投稿を取得');
+  $dbPostList = getPostList();
 }
+
 if(!empty($dbPostList)){
 	// 投稿情報がある場合は表示
 	foreach($dbPostList as $key => $val):
