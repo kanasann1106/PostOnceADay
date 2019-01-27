@@ -82,7 +82,9 @@ require('head.php');
 
 					<?php if(!empty($dbPostData['post_img'])): ?>
 					<div class="post-img-wrap">
-						<img class="post-img" src="<?php echo sanitize($dbPostData['post_img']); ?>">
+						<a href="http://localhost:8888/PostOnceADay/<?php echo sanitize($dbPostData['post_img']); ?>" data-lightbox="post-img">
+							<img class="post-img" src="<?php echo sanitize($dbPostData['post_img']); ?>">
+						</a>
 					</div>
 					<?php endif; ?>
 					

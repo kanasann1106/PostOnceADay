@@ -61,10 +61,10 @@ $(function(){
 				type: 'POST',
 				url: 'ajaxGood.php',
 				data: { postId: goodPostId}
-			 }).done(function(data){
-			 		console.log('Ajax Success');
+			}).done(function(data){
+					console.log('Ajax Success');
 
-			 		// いいねの総数を表示
+					// いいねの総数を表示
 					$this.children('span').html(data);
 					// いいね取り消しのスタイル
 					$this.children('i').toggleClass('far'); //空洞ハート

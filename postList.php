@@ -66,6 +66,7 @@ if(!empty($dbPostList)){
 		<div class="post-img-wrap">
 			<img class="post-img" src="<?php echo sanitize($val['post_img']); ?>">
 		</div>
+
 		<?php endif; ?>
 		
 		<div class="post-foot">
