@@ -11,7 +11,6 @@
 	<meta property="og:description" content="1日1回の特別な投稿をみんなにシェアしてみませんか？POADはPostOnceADay「1日に1回しか投稿できない」掲示板サービスです。">
 	<meta property="og:url" content="https://poad.kanasann.com">
 	<meta property="og:image" content="https://kanasann.com/poad/images/poad_img.png">
-	<meta name="twitter:card" content="Summary Card">
 	<meta name="twitter:card" content="summary_large_image">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css">
 	<link rel="stylesheet" type="text/css" href="style.css">
