@@ -63,7 +63,6 @@ $(function(){
 				data: { postId: goodPostId}
 			}).done(function(data){
 					console.log('Ajax Success');
-
 					// いいねの総数を表示
 					$this.children('span').html(data);
 					// いいね取り消しのスタイル
