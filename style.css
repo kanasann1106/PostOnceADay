@@ -36,6 +36,13 @@ a:hover{
 -----------------------------------*/
 /*font-family: 'Permanent Marker', cursive;
 font-family: 'Acme', sans-serif;*/
+/*----------------------------------
+	animation
+-----------------------------------*/
+@keyframes fadeIn{
+	0%{opacity: 0;}
+	100%{opacity: 1}
+}
 
 /*----------------------------------
 	ヘッダー
@@ -68,9 +75,9 @@ header h1 a:hover{
 	list-style-type: none;
 	position: absolute;
 	top: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0;
 	width: 260px;
 	line-height: 56px;
 }
@@ -84,6 +91,7 @@ header h1 a:hover{
 	display: block;
 	width: 104px;
 	text-align: center;
+	transition: all .5s;
 }
 @media screen and (max-width: 700px){
 	header h1{
@@ -102,6 +110,7 @@ header h1 a:hover{
 -----------------------------------*/
 main{
 	margin: 96px auto;
+	animation: fadeIn 1s;
 }
 .site-wrap{
 	max-width: 720px;
@@ -340,10 +349,15 @@ input[type="submit"]{
 	padding: 15px 0;
 	border: none;
 	width: 100%;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	box-shadow: 0 4px 2px rgba(0,0,0,0.2), 0 -4px 5px -2px #6d95ce inset;
 }
 input[type="submit"]:hover{
 	cursor: pointer;
 	opacity: 0.7;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
 .btn-container{
 	padding-top: 18px;
