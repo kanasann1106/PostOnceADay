@@ -39,11 +39,10 @@ font-family: 'Acme', sans-serif;*/
 /*----------------------------------
 	animation
 -----------------------------------*/
-@keyframes fadeIn{
+/*@keyframes fadeIn{
 	0%{opacity: 0;}
 	100%{opacity: 1}
-}
-
+}*/
 /*----------------------------------
 	ヘッダー
 -----------------------------------*/
@@ -110,7 +109,6 @@ header h1 a:hover{
 -----------------------------------*/
 main{
 	margin: 96px auto;
-	animation: fadeIn 1s;
 }
 .site-wrap{
 	max-width: 720px;
